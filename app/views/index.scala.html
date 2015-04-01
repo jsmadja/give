@@ -1,0 +1,20 @@
+@(localUser: models.User = null)
+
+@import com.feth.play.module.pa.views.html._
+@import com.feth.play.module.pa.providers.AuthProvider._
+@import com.feth.play.module.pa.controllers.routes.Authenticate._
+
+@main("Give !") {
+
+    @currentAuth() { auth =>
+        @if(auth != null) {
+            Bienvenue @localUser.name !
+            <a href="@logout">Logout</a>
+        } else {
+            @defining(Registry.get("google")) { p =>
+                Se connecter avec <a href="@p.getUrl()">@p.getKey()</a>
+            }
+        }
+    }
+
+}

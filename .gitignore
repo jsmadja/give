@@ -1,4 +1,5 @@
 # Ignore Play! working directory #
+.idea/
 bin/
 /db
 .eclipse
@@ -15,3 +16,9 @@ server.pid
 *.eml
 /dist/
 .cache
+.sbtserver/
+.settings/
+activator
+activator-launch-1.3.2.jar
+activator.bat
+project
