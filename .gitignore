@@ -15,10 +15,11 @@ server.pid
 *.eml
 /dist/
 .cache
-.sbtserver/
 .settings/
 activator
 activator-launch-1.3.2.jar
 activator.bat
 project/target
 project/.sbtserver.lock
+project/.sbtserver
+.sbtserver/
