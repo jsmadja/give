@@ -1,20 +1,13 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-
-import views.html.*;
+import com.feth.play.module.pa.PlayAuthenticate;
 import models.User;
 import play.mvc.Controller;
-import play.mvc.Http.Response;
 import play.mvc.Http.Session;
 import play.mvc.Result;
 import views.html.index;
 
-import com.feth.play.module.pa.PlayAuthenticate;
-
 public class Application extends Controller {
-
 
     public static final String FLASH_MESSAGE_KEY = "message";
     public static final String FLASH_ERROR_KEY = "error";
@@ -31,7 +24,6 @@ public class Application extends Controller {
     }
 
     public static User getLocalUser(final Session session) {
-        final User localUser = User.findByAuthUserIdentity(PlayAuthenticate.getUser(session));
-        return localUser;
+        return User.findByAuthUserIdentity(PlayAuthenticate.getUser(session));
     }
 }

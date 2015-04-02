@@ -1,26 +1,24 @@
-@(localUser: models.User = null)
+@import com.feth.play.module.pa.controllers.routes.Authenticate._
+@import com.feth.play.module.pa.providers.AuthProvider._
+@import com.feth.play.module.pa.views.html._lay.module.pa.views.html._
 
-    @import com.feth.play.module.pa.controllers.routes.Authenticate._
-    @import com.feth.play.module.pa.providers.AuthProvider._
-    @import com.feth.play.module.pa.views.html._
+@main("Give !") {
 
-    @main("Give !") {
+    @currentAuth() { auth =>
 
-        @currentAuth() { auth =>
+        @if(auth != null && localUser != null) {
 
-            @if(auth != null && localUser != null) {
+            Bienvenue @localUser.name
 
-                Bienvenue @localUser.name
+            <a href="@logout">Logout</a>
 
-                <a href="@logout">Logout</a>
+        } else {
 
-            } else {
-
-                @defining(Registry.get("google")) { p =>
-                Se connecter avec <a href="@p.getUrl()">@p.getKey()</a>
-                }
-
+            @defining(Registry.get("google")) { p =>
+            Se connecter avec <a href="@p.getUrl()">@p.getKey()</a>
             }
-        }
 
+        }
     }
+
+}
