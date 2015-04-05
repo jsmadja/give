@@ -1,24 +1,23 @@
-@(user: models.User, requests: List[models.Request])
+@(user: models.User)
 
 @main("Give! - Requests", user) {
 
-    <h1>Les objets qui intéressent mes contacts</h1>
+    <h1>Demandes en cours</h1>
 
-    <table>
-    @for(request <- requests) {
+    <table id="requests" class="table table-bordered">
+    @for(request <- models.User.getPendingRequests) {
         <tr>
+            <td><img src="data:image/jpeg;base64,@request.gift.photoBase64"/></td>
             <td>
-            @request.requester.name
-            </td>
-            <td>
-            @request.gift.name
-            </td>
-            <td>
-                <form method="POST" action="/give">
+                <span class="user-name">@request.requester.name</span> voudrait <span class="gift-name">@request.gift.name</span>
+                <span class="gift-category-name">@request.gift.category.name</span>
+                <p>
+                    @request.gift.description
+                </p>
+                <form id="give" method="POST" action="/give">
                     <input type="hidden" name="requestId" value="@request.id">
-                    <input type="submit" class="give" value="Je donne!"/>
+                    <input type="submit" class="btn btn-sm btn-primary" value="Je donne !"/>
                 </form>
-            </td>
         </tr>
     }
     </table>

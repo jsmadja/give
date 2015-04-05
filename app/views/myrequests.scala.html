@@ -2,14 +2,23 @@
 
 @main("Give! - Requests", user) {
 
-    <h1>Les objets que j'aimerais</h1>
+    <h1>Mes demandes</h1>
 
-    <table>
+    <table class="table table-bordered">
     @for(request <- user.requests) {
         <tr>
-            <td>@request.gift.name</td>
-            <td><img src="data:image/jpeg;base64,@request.gift.photoBase64" style="width : 100px;"/></td>
-            <td>@request.gift.description</td>
+            <td><img class="thumbnail" src="data:image/jpeg;base64,@request.gift.photoBase64"/></td>
+            <td>
+                <span class="user-name">@request.requester.name</span>
+                <span class="gift-name">@request.gift.name</span>
+                <span class="gift-category-name">@request.gift.category.name</span>
+                <p>
+                @request.gift.description
+                </p>
+                <form id="removeRequest" action = "/gifts" method="DELETE">
+                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                </form>
+            </td>
         </tr>
     }
     </table>

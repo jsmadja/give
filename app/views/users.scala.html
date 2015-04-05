@@ -1,0 +1,17 @@
+@(user: models.User, contacts: List[models.User])
+
+@main("Give! - Contacts", user) {
+
+    <h1>Mes contacts</h1>
+
+    <table id="contacts" class="table table-bordered">
+    @for(contact <- contacts) {
+        <tr>
+            <td>
+                @contact.name
+            </td>
+        </tr>
+    }
+    </table>
+
+}

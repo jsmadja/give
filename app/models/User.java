@@ -15,6 +15,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import static controllers.Users.currentUser;
+import static models.Gift.findAllGiftsFor;
+
 @Entity
 @Table(name = "users")
 public class User extends Model {
@@ -24,35 +27,26 @@ public class User extends Model {
     @Id
     @GeneratedValue
     public Long id;
-
-    @CreatedTimestamp
-    @Column(name = "created_at")
-    private Date createdAt;
-
-    @UpdatedTimestamp
-    @Column(name = "updated_at")
-    private Date updatedAt;
-
     @Constraints.Email
     // if you make this unique, keep in mind that users *must* merge/link their
     // accounts then on signup with additional providers
     // @Column(unique = true)
     public String email;
-
     public String name;
-
     public boolean active;
-
     public boolean emailValidated;
-
     @OneToMany(cascade = CascadeType.ALL)
     public List<LinkedAccount> linkedAccounts;
-
     @OneToMany(mappedBy = "giver")
     public List<Gift> gifts;
-
     @OneToMany(mappedBy = "requester")
     public List<Request> requests;
+    @CreatedTimestamp
+    @Column(name = "created_at")
+    private Date createdAt;
+    @UpdatedTimestamp
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
     public static boolean existsByAuthUserIdentity(final AuthUserIdentity identity) {
         final ExpressionList<User> exp = getAuthUserFind(identity);
@@ -96,6 +90,18 @@ public class User extends Model {
 
         user.save();
         return user;
+    }
+
+    public static List<Gift> getCatalog() {
+        return findAllGiftsFor(currentUser());
+    }
+
+    public static List<Request> getPendingRequests() {
+        return Request.findAllRequestsFor(currentUser());
+    }
+
+    public static List<User> getContacts() {
+        return find.all();
     }
 
 }

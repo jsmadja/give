@@ -8,6 +8,7 @@ GET         /myrequests                           controllers.MyRequests.index
 GET         /requests                             controllers.Requests.index
 GET         /catalog                              controllers.Catalog.index
 GET         /gifts                                controllers.Gifts.index
+GET         /users                                controllers.Users.index
 
 GET         /restricted                           controllers.Restricted.index
 GET         /logout                               com.feth.play.module.pa.controllers.Authenticate.logout

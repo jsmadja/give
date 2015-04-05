@@ -49,6 +49,8 @@ public class Gift extends Model {
     @ManyToOne
     public Category category;
 
+    public boolean given;
+
     public static List<Gift> findAllGiftsFor(User user) {
         return find.where(ne("giver", user)).findList();
     }

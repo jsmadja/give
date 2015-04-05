@@ -10,13 +10,12 @@ import views.html.catalog;
 import java.util.Map;
 
 import static controllers.Users.currentUser;
-import static models.Gift.findAllGiftsFor;
 
 @Security.Authenticated(Secured.class)
 public class Catalog extends Controller {
 
     public static Result index() {
-        return ok(catalog.render(currentUser(), findAllGiftsFor(currentUser())));
+        return ok(catalog.render(currentUser()));
     }
 
     public static Result addRequest() {

@@ -1,5 +1,13 @@
 @(user: models.User)
+
+@import com.feth.play.module.pa.views.html._
+
 @main("Give !", user) {
 
-    HELLO WORLD
+    @currentAuth() { auth =>
+
+        @if(auth != null && user != null) {
+            "HAUTH"
+        }
+    }
 }

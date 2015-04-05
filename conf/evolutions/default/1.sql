@@ -25,6 +25,7 @@ create table gifts (
   photo_base64              longtext,
   giver_id                  bigint,
   category_id               bigint,
+  given                     tinyint(1) default 0,
   created_at                datetime not null,
   updated_at                datetime not null,
   constraint pk_gifts primary key (id))

@@ -7,43 +7,73 @@
 <html lang="@lang().code()">
     <head>
         <title>@title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-theme.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <script src="@routes.Assets.at("javascripts/jquery-1.11.2.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap.js")" type="text/javascript"></script>
     </head>
-
     <body>
-        @if(flash.contains(Application.FLASH_ERROR_KEY)) {
-            <div style="color : red ;">
-            @flash().get(Application.FLASH_ERROR_KEY)
-            </div>
-        }
-        @if(flash.contains(Application.FLASH_MESSAGE_KEY)) {
-            <div style="color : blue ;">
-            @flash().get(Application.FLASH_MESSAGE_KEY)
-            </div>
-        }
-
-        @currentAuth() { auth =>
-
-            @if(auth != null && user != null) {
-
-                Bienvenue @user.name - <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">
-                    Logout</a>
-
-                <ul>
-                    <li><a href="@routes.Gifts.index">My Gifts</a></li>
-                    <li><a href="@routes.Catalog.index">Catalog</a></li>
-                    <li><a href="@routes.Requests.index">Requests</a></li>
-                    <li><a href="@routes.MyRequests.index">My Requests</a></li>
-                </ul>
-
-            } else {
-                @defining(Registry.get("google")) { p =>
-                    Se connecter avec <a href="@p.getUrl()">@p.getKey()</a>
-                }
-
+        <div class="container-fluid">
+            @if(flash.contains(Application.FLASH_ERROR_KEY)) {
+                <div style="color : red ;">
+                @flash().get(Application.FLASH_ERROR_KEY)
+                </div>
             }
-        }
+            @if(flash.contains(Application.FLASH_MESSAGE_KEY)) {
+                <div style="color : blue ;">
+                @flash().get(Application.FLASH_MESSAGE_KEY)
+                </div>
+            }
 
-        @content
+            <div class="row" id="header">
+                <div class="col-md-2"></div>
+                <div id="title"  class="col-md-8">
+                <a href="/">Give!</a>
+                </div>
+                <div class="col-md-2" id="user-space">
+                    @currentAuth() { auth =>
+
+                        @if(auth != null && user != null) {
+                                @user.name <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">
+                                    Logout</a>
+                        } else {
+                            @defining(Registry.get("google")) { p =>
+                                Se connecter avec <a href="@p.getUrl()">@p.getKey()</a>
+                            }
+
+                        }
+                    }
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-2" id="menu">
+                @currentAuth() { auth =>
+
+                    @if(auth != null && user != null) {
+                        <ul>
+                            <li><img id="icon-catalog" src="@routes.Assets.at("images/catalog.svg")"/><a href="@routes.Catalog.index">Voir le catalogue <span class="badge">@models.User.getCatalog.size</span></a></li>
+                            <li><img id="icon-add_gift" src="@routes.Assets.at("images/add_gift.svg")"/> <a href="@routes.Gifts.index">Voir mes objets <span class="badge">@user.gifts.size</span></a></li>
+                            <li><img id="icon-myrequests" src="@routes.Assets.at("images/myrequests.svg")"/><a href="@routes.MyRequests.index">Voir mes demandes <span class="badge">@user.requests.size</span></a></li>
+                            <li><img id="icon-requests" src="@routes.Assets.at("images/requests.svg")"/><a href="@routes.Requests.index">Répondre aux demandes <span class="badge">@models.User.getPendingRequests.size</span></a></li>
+                            <li><img id="icon-contacts" src="@routes.Assets.at("images/contacts.svg")"/><a href="@routes.Users.index">Voir mes contacts <span class="badge">@models.User.getContacts.size</span></a></li>
+                        </ul>
+                    }
+                }
+                </div>
+                <div class="col-md-10">
+                    @content
+                </div>
+            </div>
+        </div>
+
+        <hr/>
+        <footer>
+            <a href="/">Qui sommes-nous ?</a>
+        </footer>
 
     </body>
 </html>

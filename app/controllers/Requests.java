@@ -16,7 +16,7 @@ import static controllers.Users.currentUser;
 public class Requests extends Controller {
 
     public static Result index() {
-        return ok(requests.render(currentUser(), Request.findAllRequestsFor(currentUser())));
+        return ok(requests.render(currentUser()));
     }
 
     public static Result give() {
@@ -26,7 +26,8 @@ public class Requests extends Controller {
         User receiver = request.requester;
         User user = currentUser();
         Gift gift = request.gift;
-        gift.delete();
+        gift.given = true;
+        gift.update();
         return redirect(routes.Requests.index());
     }
 

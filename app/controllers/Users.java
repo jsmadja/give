@@ -1,11 +1,18 @@
 package controllers;
 
 import com.feth.play.module.pa.PlayAuthenticate;
+import models.Category;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Http;
+import play.mvc.Result;
+import views.html.users;
 
 public class Users extends Controller {
+
+    public static Result index() {
+        return ok(users.render(currentUser(), User.getContacts()));
+    }
 
     public static User getLocalUser(final Http.Session session) {
         return User.findByAuthUserIdentity(PlayAuthenticate.getUser(session));
