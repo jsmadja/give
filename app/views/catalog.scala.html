@@ -1,15 +1,34 @@
-@(user: models.User, offers: List[models.Gift])
+@(user: models.User, catalog: List[models.Gift])
 
 @main("Give! - Catalog", user) {
     <h1>Toutes les offres</h1>
-    <ul>
-        @for(gift <- offers) {
-            <li>
-                @gift.giver.name @@ @gift.category.name
-                - @gift.name <img src="data:image/jpeg;base64,@gift.photoBase64" style="width : 100px;"/> @gift.description
-            <button class="want" data-gift-id="@gift.id">I WANT IT</button>
-            </li>
-        }
-    </ul>
+    <table>
+    @for(gift <- catalog) {
+        <tr>
+            <td>
+                <img src="data:image/jpeg;base64,@gift.photoBase64" style="width : 100 px ;"/>
+            </td>
+            <td>
+            @gift.description
+            </td>
+            <td>
+            @gift.giver.name
+            </td>
+            <td>
+            @gift.category.name
+            </td>
+            <td>
+            @gift.name
+            </td>
+            <td>
+                <form method="POST" action="requests">
+                    <input type="hidden" value="@gift.id" name="giftId" />
+                    <input type="submit" class="want" value="I WANT IT" />
+                </form>
+
+            </td>
+        </tr>
+    }
+    </table>
 
 }

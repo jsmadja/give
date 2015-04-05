@@ -4,10 +4,14 @@
 
     <h1>Les objets que j'aimerais</h1>
 
-    <ul>
+    <table>
     @for(request <- user.requests) {
-        <li>@request.gift.name <img src="data:image/jpeg;base64,@request.gift.photoBase64" style="width : 100px;"/> @request.gift.description</li>
+        <tr>
+            <td>@request.gift.name</td>
+            <td><img src="data:image/jpeg;base64,@request.gift.photoBase64" style="width : 100px;"/></td>
+            <td>@request.gift.description</td>
+        </tr>
     }
-    </ul>
+    </table>
 
 }

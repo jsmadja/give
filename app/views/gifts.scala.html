@@ -23,10 +23,14 @@
 
     <h1>Mes objets à donner</h1>
 
-    <ul>
+    <table>
     @for(gift <- user.gifts) {
-        <li>@gift.category.name
-            - @gift.name <img src="data:image/jpeg;base64,@gift.photoBase64" style="width : 100 px ;"/> @gift.description</li>
+        <tr>
+            <td>@gift.category.name</td>
+            <td>@gift.description</td>
+            <td>@gift.name</td>
+            <td><img src="data:image/jpeg;base64,@gift.photoBase64" style="width : 100px;"/></td>
+        </tr>
     }
-    </ul>
+    </table>
 }

@@ -1,14 +1,13 @@
 # Routes
 
-GET         /myrequests                           controllers.MyRequests.index
-GET         /requests                             controllers.Requests.index
-POST        /request                              controllers.Catalog.addRequest
-
-GET         /catalog                              controllers.Catalog.index
-
-GET         /gifts                                controllers.Gifts.index
+POST        /requests                             controllers.Catalog.addRequest
 POST        /gifts                                controllers.Gifts.addGift
 POST        /give                                 controllers.Requests.give
+
+GET         /myrequests                           controllers.MyRequests.index
+GET         /requests                             controllers.Requests.index
+GET         /catalog                              controllers.Catalog.index
+GET         /gifts                                controllers.Gifts.index
 
 GET         /restricted                           controllers.Restricted.index
 GET         /logout                               com.feth.play.module.pa.controllers.Authenticate.logout

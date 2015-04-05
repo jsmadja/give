@@ -20,8 +20,8 @@ public class Requests extends Controller {
     }
 
     public static Result give() {
-        Map<String, String[]> stringMap = request().body().asFormUrlEncoded();
-        Long requestId = Long.parseLong(stringMap.get("requestId")[0]);
+        Map<String, String[]> data = request().body().asFormUrlEncoded();
+        Long requestId = Long.parseLong(data.get("requestId")[0]);
         Request request = Request.find.byId(requestId);
         User receiver = request.requester;
         User user = currentUser();

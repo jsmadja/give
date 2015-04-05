@@ -4,12 +4,23 @@
 
     <h1>Les objets qui intéressent mes contacts</h1>
 
-    <ul>
+    <table>
     @for(request <- requests) {
-        <li>
-            @request.requester.name - <button class="give" data-request-id="@request.id">I GIVE IT</button>
-        </li>
+        <tr>
+            <td>
+            @request.requester.name
+            </td>
+            <td>
+            @request.gift.name
+            </td>
+            <td>
+                <form method="POST" action="/give">
+                    <input type="hidden" name="requestId" value="@request.id">
+                    <input type="submit" class="give" value="Je donne!"/>
+                </form>
+            </td>
+        </tr>
     }
-    </ul>
+    </table>
 
 }

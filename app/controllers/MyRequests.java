@@ -6,7 +6,6 @@ import play.mvc.Security;
 import views.html.myrequests;
 
 import static controllers.Users.currentUser;
-import static models.Request.findAllRequestsFor;
 
 @Security.Authenticated(Secured.class)
 public class MyRequests extends Controller {
