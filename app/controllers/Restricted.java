@@ -1,6 +1,5 @@
 package controllers;
 
-import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -10,7 +9,6 @@ import views.html.restricted;
 public class Restricted extends Controller {
 
     public static Result index() {
-        final User localUser = Application.getLocalUser(session());
-        return ok(restricted.render(localUser));
+        return ok(restricted.render());
     }
 }

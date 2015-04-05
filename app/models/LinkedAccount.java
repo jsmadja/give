@@ -6,11 +6,13 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "linked_accounts")
 public class LinkedAccount extends Model {
 
-    public static final Finder<Long, LinkedAccount> find = new Finder<Long, LinkedAccount>(Long.class, LinkedAccount.class);
+    public static final Finder<Long, LinkedAccount> find = new Finder<>(Long.class, LinkedAccount.class);
 
     @Id
     public Long id;

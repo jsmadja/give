@@ -1,0 +1,13 @@
+@(user: models.User)
+
+@main("Give! - Requests", user) {
+
+    <h1>Les objets que j'aimerais</h1>
+
+    <ul>
+    @for(request <- user.requests) {
+        <li>@request.gift.name <img src="data:image/jpeg;base64,@request.gift.photoBase64" style="width : 100px;"/> @request.gift.description</li>
+    }
+    </ul>
+
+}

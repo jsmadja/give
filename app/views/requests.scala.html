@@ -1,0 +1,15 @@
+@(user: models.User, requests: List[models.Request])
+
+@main("Give! - Requests", user) {
+
+    <h1>Les objets qui intéressent mes contacts</h1>
+
+    <ul>
+    @for(request <- requests) {
+        <li>
+            @request.requester.name - <button class="give" data-request-id="@request.id">I GIVE IT</button>
+        </li>
+    }
+    </ul>
+
+}
