@@ -9,6 +9,7 @@ import com.feth.play.module.pa.user.EmailIdentity;
 import com.feth.play.module.pa.user.NameIdentity;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
+import play.mvc.PathBindable;
 
 import javax.persistence.*;
 import java.util.Collections;
@@ -20,7 +21,7 @@ import static models.Gift.findAllGiftsFor;
 
 @Entity
 @Table(name = "users")
-public class User extends Model {
+public class User extends Model implements PathBindable<User> {
 
     public static final Finder<Long, User> find = new Finder<>(Long.class, User.class);
 
@@ -93,7 +94,11 @@ public class User extends Model {
     }
 
     public static List<Gift> getCatalog() {
-        return findAllGiftsFor(currentUser());
+        User user = currentUser();
+        List<Gift> availableGifts = findAllGiftsFor(user);
+        List<Gift> requestedGifts = Request.findRequestedGiftsOf(user);
+        availableGifts.removeAll(requestedGifts);
+        return availableGifts;
     }
 
     public static List<Request> getPendingRequests() {
@@ -102,6 +107,21 @@ public class User extends Model {
 
     public static List<User> getContacts() {
         return find.all();
+    }
+
+    @Override
+    public User bind(String key, String value) {
+        return find.byId(Long.valueOf(value));
+    }
+
+    @Override
+    public String unbind(String s) {
+        return id.toString();
+    }
+
+    @Override
+    public String javascriptUnbind() {
+        return null;
     }
 
 }

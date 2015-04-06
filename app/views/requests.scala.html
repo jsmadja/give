@@ -4,10 +4,17 @@
 
     <h1>Demandes en cours</h1>
 
+    @if(models.User.getPendingRequests.isEmpty) {
+        <p>Vous n'avez pas de demandes en attente</p>
+    } else {
     <table id="requests" class="table table-bordered">
     @for(request <- models.User.getPendingRequests) {
         <tr>
-            <td><img src="data:image/jpeg;base64,@request.gift.photoBase64"/></td>
+            <td>
+                @if(request.gift.photoBase64) {
+                    <img src="data:image/jpeg;base64,@request.gift.photoBase64"/>
+                }
+            </td>
             <td>
                 <span class="user-name">@request.requester.name</span> voudrait <span class="gift-name">@request.gift.name</span>
                 <span class="gift-category-name">@request.gift.category.name</span>
@@ -21,5 +28,6 @@
         </tr>
     }
     </table>
+    }
 
 }

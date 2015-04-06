@@ -1,26 +1,52 @@
 @(user: models.User)
 
 @main("Give! - Catalog", user) {
-    <h1>Toutes les offres</h1>
+    <h1>Vos contacts donnent ces objets</h1>
 
-    <table id="catalog" class="table table-bordered">
-    @for(gift <- models.User.getCatalog) {
-        <tr>
-            <td><img src="data:image/jpeg;base64,@gift.photoBase64"/></td>
-            <td>
-                <span class="user-name">@gift.giver.name</span>
-                <span class="gift-name">@gift.name</span>
-                <span class="gift-category-name">@gift.category.name</span>
-                <p>
-                @gift.description
-                </p>
-                <form id="addRequest" method="POST" action="requests">
-                    <input type="hidden" value="@gift.id" name="giftId" />
-                    <input type="submit" class="btn btn-sm btn-primary" value="Je le veux !" />
-                </form>
-            </td>
-        </tr>
+    @if(models.User.getCatalog.isEmpty) {
+        <p>Aucun objet disponible pour le moment ...</p>
+
+        <div class="alert alert-info" role="alert">
+            <strong>Astuce !</strong> Ajoutez de nouvelles relations en allant sur <a href="/users">la page de gestion de contacts ...</a>
+        </div>
+
+    } else {
+        <ul>
+        @for(giftsByCategories <- models.User.getCatalog.toSeq.groupBy(_.category)) {
+            <li><a href="#@giftsByCategories._1.id">@giftsByCategories._1.name (@giftsByCategories._2.size)</a></li>
+        }
+        </ul>
+
+        @for(giftsByCategories <- models.User.getCatalog.toSeq.groupBy(_.category)) {
+            <h3>@giftsByCategories._1.name</h3>
+            <a name="@giftsByCategories._1.id"></a>
+
+            <table id="catalog" class="table table-bordered">
+            @for(gift <- giftsByCategories._2.sortBy(_.name)) {
+                <tr>
+                    <td>
+                        @if(gift.photoBase64) {
+                            <img src="data:image/jpeg;base64,@gift.photoBase64"/>
+                        } else {
+                            <img src="@routes.Assets.at("images/no_photo.svg")" class="icon-no_photo" />
+                        }
+                    </td>
+                    <td>
+                        <span class="user-name">@gift.giver.name</span> donne <span class="gift-name">@gift.name</span>
+                        <p>
+                        @gift.description
+                        </p>
+                        <form id="addRequest" method="POST" action="requests">
+                            <input type="hidden" value="@gift.id" name="giftId" />
+                            <input type="submit" class="btn btn-sm btn-primary" value="Je prends" />
+                        </form>
+                    </td>
+                </tr>
+            }
+            </table>
+        }
+
     }
-    </table>
+
 
 }

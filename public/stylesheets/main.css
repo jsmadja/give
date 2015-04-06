@@ -40,6 +40,8 @@ td img {
 
 #user-space {
     text-transform: capitalize;
+    text-align: right;
+    line-height: 77px;
 }
 
 #header {
@@ -51,6 +53,11 @@ td img {
 #title {
     font-size: 24px;
     text-align: center;
+}
+
+#title a {
+    color: white;
+    font-size: 54px;
 }
 
 #icon-catalog {
@@ -73,6 +80,10 @@ td img {
     width: 40px;
 }
 
+#icon-logout {
+    width: 30px;
+}
+
 .user-name {
     font-weight: bold;
     color: #33485e;
@@ -91,17 +102,70 @@ td img {
 #addGift {
     background-color: #F2F2F2;
     border-radius: 2px;
-    padding: 10px;
+    padding: 5px;
 }
 
 #catalog td:first-child, #requests td:first-child, #myrequests td:first-child, #gifts td:first-child {
     padding: 0;
+    width: 100px;
 }
 
-#removeGift, #give, #addRequest {
+#removeGift, #give, #addRequest, #removeRequest {
     float: right;
+}
+
+table p {
+    font-size: 0.8em;
 }
 
 footer {
     text-align: center;
+}
+
+.dashboard-block {
+    color: white;
+    margin: 10px;
+    height: 200px;
+    padding: 0;
+    background-color: #33485e;
+    width: 30%;
+}
+
+.dashboard-block:hover {
+    background-color: #8d92a6;
+}
+
+.dashboard-block img {
+    float: left;
+}
+
+.dashboard-block #icon-catalog {
+    width: inherit;
+}
+
+.dashboard-block #icon-add_gift {
+    width: 100px;
+}
+
+.dashboard-block #icon-myrequests {
+    width: 110px;
+}
+
+.dashboard-block #icon-requests {
+    width: inherit;
+}
+
+.dashboard-block #icon-contacts {
+    width: inherit;
+}
+
+.Button.btn.unAuthGplusConnect {
+    background-color: #ef6666;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f87474), to(#e65858));
+    background: -webkit-linear-gradient(#f87474, #e65858);
+    background: linear-gradient(#f87474, #e65858);
+    border: 1px solid #e34242;
+    border-top-color: #e65858;
+    color: #444;
+    text-shadow: 0 1px #fff;
 }

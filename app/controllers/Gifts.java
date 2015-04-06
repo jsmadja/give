@@ -43,5 +43,12 @@ public class Gifts extends Controller {
         return redirect(routes.Gifts.index());
     }
 
+    public static Result removeGift() throws IOException {
+        Map<String, String[]> data = request().body().asFormUrlEncoded();
+        Long id = Long.parseLong(data.get("giftId")[0]);
+        Gift gift = Gift.find.byId(id);
+        gift.delete();
+        return redirect(routes.Gifts.index());
+    }
 
 }

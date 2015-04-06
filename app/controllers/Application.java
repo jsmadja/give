@@ -3,6 +3,7 @@ package controllers;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
+import views.html.about;
 
 import static controllers.Users.getLocalUser;
 
@@ -13,6 +14,10 @@ public class Application extends Controller {
 
     public static Result index() {
         return ok(index.render(getLocalUser(session())));
+    }
+
+    public static Result about() {
+        return ok(about.render(getLocalUser(session())));
     }
 
     public static Result oAuthDenied(final String providerKey) {

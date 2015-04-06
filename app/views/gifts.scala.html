@@ -2,50 +2,70 @@
 
 @main("Give! - Gifts", user) {
 
-    <h1>Mes objets à donner</h1>
+    @if(!user.gifts.isEmpty) {
+        <h1>Mes objets à donner</h1>
 
-    <table id="gifts" class="table table-bordered">
-    @for(gift <- user.gifts) {
-        <tr>
-            <td><img src="data:image/jpeg;base64,@gift.photoBase64"/></td>
-            <td>
-                <span class="gift-name">@gift.name</span>
-                <span class="gift-category-name">@gift.category.name</span>
-                <p>@gift.description</p>
-                <form id="removeGift" action = "/gifts" method="DELETE">
-                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
-                </form>
-            </td>
-        </tr>
+        <ul>
+        @for(giftsByCategories <- user.gifts.toSeq.groupBy(_.category)) {
+            <li><a href="#@giftsByCategories._1.id">@giftsByCategories._1.name (@giftsByCategories._2.size)</a></li>
+        }
+        </ul>
+
+        @for(giftsByCategories <- user.gifts.toSeq.groupBy(_.category)) {
+            <h3>@giftsByCategories._1.name</h3>
+            <a name="@giftsByCategories._1.id"></a>
+
+            <table id="gifts" class="table table-bordered">
+            @for(gift <- giftsByCategories._2.sortBy(_.name)) {
+                <tr>
+                    <td>
+                    @if(gift.photoBase64) {
+                        <img src="data:image/jpeg;base64,@gift.photoBase64"/>
+                    } else {
+                        <img src="@routes.Assets.at("images/no_photo.svg")" class="icon-no_photo" />
+                    }
+                    </td>
+                    <td>
+                        <span class="gift-name">@gift.name</span>
+                        <p>@gift.description</p>
+                        <form id="removeGift" action = "/gifts/remove" method="POST">
+                            <input type="hidden" name="giftId" value="@gift.id" />
+                            <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </table>
+        }
     }
-    </table>
 
-    <h1>Donner un autre objet</h1>
+    <h1>Donner un objet</h1>
 
     <form id="addGift" action = "/gifts" method="POST" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="name">Titre</label>
-            <input required name="name" class="form-control" placeholder="Une serviette éponge">
-        </div>
-
-        <div class="form-group">
-            <label for="description">Description</label>
-            <input type="text" name="description" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="photo">Photo</label>
-            <input type="file" name="photo">
-        </div>
-
-        <div class="form-group">
+            <label for="category">Catégorie</label>
             <select name="category" class="form-control">
             @for(category <- categories) {
                 <option value="@category.id">@category.name</option>
             }
             </select>
         </div>
-        <button type="submit" class="btn btn-default">Valider</button>
+        <div class="form-group">
+            <label for="name">Titre de l'annonce</label>
+            <input required name="name" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description de l'annonce</label>
+            <textarea name="description" rows="5" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="photo">Photo principale</label>
+            <input type="file" name="photo">
+        </div>
+
+        <button type="submit" class="btn btn-success">Valider</button>
     </form>
 
 

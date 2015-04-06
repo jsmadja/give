@@ -1,13 +1,64 @@
 @(user: models.User)
-
 @import com.feth.play.module.pa.views.html._
+@import com.feth.play.module.pa.providers.AuthProvider._
 
 @main("Give !", user) {
 
     @currentAuth() { auth =>
 
         @if(auth != null && user != null) {
-            "HAUTH"
+            <div class="row">
+                <div class="col-md-4 dashboard-block">
+                    <img id="icon-catalog" src="@routes.Assets.at("images/catalog.svg")" />
+                    Le catalogue contient @models.User.getCatalog.size objets
+                </div>
+
+                <div class="col-md-4 dashboard-block">
+                    <img id="icon-add_gift" src="@routes.Assets.at("images/add_gift.svg")" />
+                Vous avez @user.gifts.size objets à proposer à vos contacts
+                </div>
+
+                <div class="col-md-4 dashboard-block">
+                    <img id="icon-myrequests" src="@routes.Assets.at("images/myrequests.svg")" />
+                    Vous êtes en attente de @user.requests.size objets de la part de vos contacts
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 dashboard-block">
+                    <img id="icon-requests" src="@routes.Assets.at("images/requests.svg")" />
+                    Vous avez @models.User.getPendingRequests.size demandes à traiter
+                </div>
+
+                <div class="col-md-4 dashboard-block">
+                    <img id="icon-contacts" src="@routes.Assets.at("images/contacts.svg")" />
+                    Vous avez @models.User.getContacts.size contacts
+                </div>
+            </div>
+        } else {
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+
+                    <h1>Ne jetez plus, ne stockez plus, donnez !</h1>
+
+                    <div class="alert alert-info" style="margin-top: 50px">
+                        <p><strong>Give!</strong> vous permet d'échanger facilement les objets dont vous ne vous servez plus.</p>
+                        <p>Vous êtes les mieux placés pour savoir à qui vous souhaitez les donner : vos amis, les membres de votre famille, vos voisins et vos collègues</p>
+                        <p>En quelques étapes, constituez votre stock de dons, invitez vos relations sur <strong>Give!</strong> et commencez les échanges !</p>
+                    </div>
+                    <p>
+                        Sans inscription, il vous suffit de vous connecter avec l'un de vos comptes :</br>
+
+                        @defining(Registry.get("google")) { p =>
+                            <a href="@p.getUrl()">Se connecter avec Google</a>
+                        }
+                    </p>
+                </div>
         }
     }
+
+    </div>
+
+
 }

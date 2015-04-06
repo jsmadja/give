@@ -5,10 +5,13 @@
     <h1>Mes contacts</h1>
 
     <table id="contacts" class="table table-bordered">
-    @for(contact <- contacts) {
+    @for(contact <- contacts.sortBy(_.name)) {
         <tr>
             <td>
-                @contact.name
+                <a href="/users/@contact.id">@contact.name</a>
+            </td>
+            <td>
+                @contact.gifts.size objets
             </td>
         </tr>
     }

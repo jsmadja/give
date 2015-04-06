@@ -18,14 +18,4 @@ public class Catalog extends Controller {
         return ok(catalog.render(currentUser()));
     }
 
-    public static Result addRequest() {
-        Map<String, String[]> data = request().body().asFormUrlEncoded();
-        Long id = Long.parseLong(data.get("giftId")[0]);
-        Request request = new Request();
-        request.gift = Gift.find.byId(id);
-        request.requester = currentUser();
-        request.save();
-        return redirect(routes.Catalog.index());
-    }
-
 }

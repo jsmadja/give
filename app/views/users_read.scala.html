@@ -1,0 +1,42 @@
+@(user: models.User)
+
+@main("Give!", user) {
+
+    @if(!user.gifts.isEmpty) {
+        <h1>Les objets à donner</h1>
+
+        <ul>
+        @for(giftsByCategories <- user.gifts.toSeq.groupBy(_.category)) {
+            <li><a href="#@giftsByCategories._1.id">@giftsByCategories._1.name (@giftsByCategories._2.size)</a></li>
+        }
+        </ul>
+
+        @for(giftsByCategories <- user.gifts.toSeq.groupBy(_.category)) {
+            <h3>@giftsByCategories._1.name</h3>
+            <a name="@giftsByCategories._1.id"></a>
+
+            <table id="gifts" class="table table-bordered">
+            @for(gift <- giftsByCategories._2.sortBy(_.name)) {
+                <tr>
+                    <td>
+                    @if(gift.photoBase64) {
+                        <img src="data:image/jpeg;base64,@gift.photoBase64"/>
+                    } else {
+                        <img src="@routes.Assets.at("images/no_photo.svg")" class="icon-no_photo" />
+                    }
+                    </td>
+                    <td>
+                        <span class="gift-name">@gift.name</span>
+                        <p>@gift.description</p>
+                        <form id="addRequest" method="POST" action="requests">
+                            <input type="hidden" value="@gift.id" name="giftId" />
+                            <input type="submit" class="btn btn-sm btn-primary" value="Je prends" />
+                        </form>
+                    </td>
+                </tr>
+            }
+            </table>
+        }
+    }
+
+}
