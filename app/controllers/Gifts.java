@@ -3,6 +3,8 @@ package controllers;
 import com.ning.http.util.Base64;
 import models.Category;
 import models.Gift;
+import models.InvitationMail;
+import models.Mail;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -24,6 +26,7 @@ public class Gifts extends Controller {
     }
 
     public static Result addGift() throws IOException {
+
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart picture = body.getFile("photo");
 

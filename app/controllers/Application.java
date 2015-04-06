@@ -1,9 +1,10 @@
 package controllers;
 
+import models.InvitationMail;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.index;
 import views.html.about;
+import views.html.index;
 
 import static controllers.Users.getLocalUser;
 
