@@ -1,0 +1,30 @@
+Bonjour,
+
+<p>
+    $requester est intéressé par un de vos objets :
+</p>
+
+<table>
+    <tr>
+        <td>
+            <img src="data:image/jpeg;base64,$photoBase64"/>
+        </td>
+        <td>
+            <span class="gift-category-name">$gift-name</span>
+            <p>
+                $gift-description
+            </p>
+            <form id="give" method="POST" action="http://localhost:9000/give">
+                <input type="hidden" name="requestId" value="$request-id">
+                <input type="submit" class="btn btn-sm btn-primary" value="Je donne !"/>
+            </form>
+    </tr>
+</table>
+
+<p>
+    Cordialement,
+</p>
+
+<p>
+    l'équipe de Give!
+</p>

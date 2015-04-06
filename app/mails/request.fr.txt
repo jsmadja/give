@@ -1,0 +1,7 @@
+Bonjour,
+
+$requester est intéressé par un de vos objets $gift-name
+
+Cordialement,
+
+l'équipe de Give!

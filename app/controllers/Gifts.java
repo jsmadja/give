@@ -3,8 +3,6 @@ package controllers;
 import com.ning.http.util.Base64;
 import models.Category;
 import models.Gift;
-import models.InvitationMail;
-import models.Mail;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -43,6 +41,9 @@ public class Gifts extends Controller {
             gift.photoBase64 = Base64.encode(Files.readAllBytes(file.toPath()));
         }
         gift.save();
+
+        flash(Application.FLASH_MESSAGE_KEY, "Vous avez ajouté " + gift.name);
+
         return redirect(routes.Gifts.index());
     }
 
@@ -51,6 +52,9 @@ public class Gifts extends Controller {
         Long id = Long.parseLong(data.get("giftId")[0]);
         Gift gift = Gift.find.byId(id);
         gift.delete();
+
+        flash(Application.FLASH_MESSAGE_KEY, "Vous avez supprimé " + gift.name);
+
         return redirect(routes.Gifts.index());
     }
 

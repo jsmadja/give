@@ -1,5 +1,6 @@
 package models;
 
+import com.google.common.base.Strings;
 import com.google.common.io.Files;
 import play.Logger;
 import play.Play;
@@ -53,7 +54,7 @@ public abstract class Mail {
         }
         try {
             Session mailSession = Session.getDefaultInstance(MailerPlugin.properties, MailerPlugin.authenticator);
-            mailSession.setDebug(true);
+            //mailSession.setDebug(true);
             Transport transport = mailSession.getTransport();
             MimeMessage message = new MimeMessage(mailSession);
 
@@ -83,7 +84,7 @@ public abstract class Mail {
 
     private String build(String template, Map<String, String> values) {
         for (Map.Entry<String, String> value : values.entrySet()) {
-            template = template.replace("$" + value.getKey(), value.getValue());
+            template = template.replace("$" + value.getKey(), Strings.nullToEmpty(value.getValue()));
         }
         return template;
     }

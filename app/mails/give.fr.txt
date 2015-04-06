@@ -1,0 +1,7 @@
+Bonjour,
+
+$giver est d'accord pour vous donner : $gift-name
+
+Cordialement,
+
+l'équipe de Give!

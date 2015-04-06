@@ -2,6 +2,7 @@ package controllers;
 
 import models.Gift;
 import models.Request;
+import models.RequestMail;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -10,6 +11,7 @@ import views.html.myrequests;
 import java.util.Map;
 
 import static controllers.Users.currentUser;
+import static java.lang.String.format;
 
 @Security.Authenticated(Secured.class)
 public class MyRequests extends Controller {
@@ -25,6 +27,10 @@ public class MyRequests extends Controller {
         request.gift = Gift.find.byId(id);
         request.requester = currentUser();
         request.save();
+
+        new RequestMail(request).send();
+        flash(Application.FLASH_MESSAGE_KEY, format("Vous avez demandé %s à %s. Un email a été envoyé à %s", request.gift.name, request.gift.giver.name, request.requester.email));
+
         return redirect(routes.Catalog.index());
     }
 
@@ -32,7 +38,11 @@ public class MyRequests extends Controller {
         Map<String, String[]> data = request().body().asFormUrlEncoded();
         Long id = Long.parseLong(data.get("requestId")[0]);
         Request request = Request.find.byId(id);
+        Gift gift = Gift.find.byId(request.gift.id);
+        flash(Application.FLASH_MESSAGE_KEY, "Vous avez supprimé votre demande de " + gift.name);
+
         request.delete();
+
         return redirect(routes.MyRequests.index());
     }
 

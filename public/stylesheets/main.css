@@ -159,13 +159,26 @@ footer {
     width: inherit;
 }
 
-.Button.btn.unAuthGplusConnect {
-    background-color: #ef6666;
-    background: -webkit-gradient(linear, left top, left bottom, from(#f87474), to(#e65858));
-    background: -webkit-linear-gradient(#f87474, #e65858);
-    background: linear-gradient(#f87474, #e65858);
-    border: 1px solid #e34242;
-    border-top-color: #e65858;
-    color: #444;
-    text-shadow: 0 1px #fff;
+#connection-space-accounts {
+    text-align: center;
+}
+
+#connection-space-accounts img {
+    width: 150px;
+    margin-top: 15px;
+}
+
+.flash-error, .flash-message {
+    color: white;
+    line-height: 50px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.flash-error {
+    background-color: #e74c3c;
+}
+
+.flash-message {
+    background-color: #16a085;
 }

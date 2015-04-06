@@ -16,17 +16,6 @@
     </head>
     <body>
         <div class="container-fluid">
-            @if(flash.contains(Application.FLASH_ERROR_KEY)) {
-                <div style="color : red ;">
-                @flash().get(Application.FLASH_ERROR_KEY)
-                </div>
-            }
-            @if(flash.contains(Application.FLASH_MESSAGE_KEY)) {
-                <div style="color : blue ;">
-                @flash().get(Application.FLASH_MESSAGE_KEY)
-                </div>
-            }
-
             <div class="row" id="header">
                 <div class="col-md-2"></div>
                 <div id="title"  class="col-md-8">
@@ -34,12 +23,12 @@
                 </div>
                 <div class="col-md-2" id="user-space">
                     @currentAuth() { auth =>
+
                         @if(auth != null && user != null) {
                             <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout"><img id="icon-logout" src="@routes.Assets.at("images/logout.svg")" /></a> @user.name
                         }
                     }
                 </div>
-
             </div>
 
             <div class="row">
@@ -62,7 +51,19 @@
                         </ul>
                     </div>
                     <div class="col-md-10">
-                    @content
+                        <div class="row">
+                            @if(flash.contains(Application.FLASH_ERROR_KEY)) {
+                                <div class="flash-error">
+                                @flash().get(Application.FLASH_ERROR_KEY)
+                                </div>
+                            }
+                            @if(flash.contains(Application.FLASH_MESSAGE_KEY)) {
+                                <div class="flash-message">
+                                @flash().get(Application.FLASH_MESSAGE_KEY)
+                                </div>
+                            }
+                        </div>
+                        @content
                     </div>
                     } else {
                         <div class="col-md-1"></div>

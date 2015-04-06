@@ -8,32 +8,67 @@
 
         @if(auth != null && user != null) {
             <div class="row">
-                <div class="col-md-4 dashboard-block">
-                    <img id="icon-catalog" src="@routes.Assets.at("images/catalog.svg")" />
-                    Le catalogue contient @models.User.getCatalog.size objets
-                </div>
+                <a href="/catalog">
+                    <div class="col-md-4 dashboard-block">
+                        <img id="icon-catalog" src="@routes.Assets.at("images/catalog.svg")" />
+                        <p>
+                            Le catalogue contient <span class="label label-info">@models.User.getCatalog.size</span> objets.
+                        </p>
+                        <p>
+                            Retrouvez tous les objets que vos contacts sont prêts à donner gratuitement.
+                        </p>
+                    </div>
+                </a>
 
-                <div class="col-md-4 dashboard-block">
-                    <img id="icon-add_gift" src="@routes.Assets.at("images/add_gift.svg")" />
-                Vous avez @user.gifts.size objets à proposer à vos contacts
-                </div>
+                <a href="/gifts">
+                    <div class="col-md-4 dashboard-block">
+                        <img id="icon-add_gift" src="@routes.Assets.at("images/add_gift.svg")" />
+                        <p>
+                            Vous avez <span class="label label-info">@user.gifts.size</span> objets à proposer à vos contacts.
+                        </p>
+                        <p>
+                            Ajouter tous ces petits objets qui trainent et qui sont susceptibles de faire plaisir ou de dépanner vos proches.
+                        </p>
+                    </div>
+                </a>
 
-                <div class="col-md-4 dashboard-block">
-                    <img id="icon-myrequests" src="@routes.Assets.at("images/myrequests.svg")" />
-                    Vous êtes en attente de @user.requests.size objets de la part de vos contacts
-                </div>
+                <a href="/myrequests">
+                    <div class="col-md-4 dashboard-block">
+                        <img id="icon-myrequests" src="@routes.Assets.at("images/myrequests.svg")" />
+                        <p>
+                            Vous êtes en attente de <span class="label label-info">@user.requests.size</span> objets de la part de vos contacts.
+                        </p>
+                        <p>
+                            Vous pouvez toujours changer d'avis et supprimer vos demandes !
+                        </p>
+                    </div>
+                </a>
             </div>
 
             <div class="row">
-                <div class="col-md-4 dashboard-block">
-                    <img id="icon-requests" src="@routes.Assets.at("images/requests.svg")" />
-                    Vous avez @models.User.getPendingRequests.size demandes à traiter
-                </div>
+                <a href="/requests">
+                    <div class="col-md-4 dashboard-block">
+                        <img id="icon-requests" src="@routes.Assets.at("images/requests.svg")" />
+                        <p>
+                            Vous avez <span class="label label-info">@models.User.getPendingRequests.size</span> demandes à traiter.
+                        </p>
+                        <p>
+                            Faites plaisir à vos proches, acceptez leurs demandes et faites de la place chez vous !
+                        </p>
+                    </div>
+                </a>
 
-                <div class="col-md-4 dashboard-block">
-                    <img id="icon-contacts" src="@routes.Assets.at("images/contacts.svg")" />
-                    Vous avez @models.User.getContacts.size contacts
-                </div>
+                <a href="/users">
+                    <div class="col-md-4 dashboard-block">
+                        <img id="icon-contacts" src="@routes.Assets.at("images/contacts.svg")" />
+                        <p>
+                            Vous avez <span class="label label-info">@models.User.getContacts.size</span> contacts.
+                        </p>
+                        <p>
+                            Ajouter vos amis, vos collègues, vos voisins et bien sûr les membres de votre famille à rejoindre Give!
+                        </p>
+                    </div>
+                </a>
             </div>
         } else {
             <div class="row">
@@ -43,22 +78,20 @@
                     <h1>Ne jetez plus, ne stockez plus, donnez !</h1>
 
                     <div class="alert alert-info" style="margin-top: 50px">
-                        <p><strong>Give!</strong> vous permet d'échanger facilement les objets dont vous ne vous servez plus.</p>
-                        <p>Vous êtes les mieux placés pour savoir à qui vous souhaitez les donner : vos amis, les membres de votre famille, vos voisins et vos collègues</p>
+                        <p><strong>Give!</strong> vous permet de vous séparer facilement des objets dont vous ne vous servez plus.</p>
+                        <p>Vous êtes les mieux placés pour savoir à qui vous souhaitez les donner : vos amis, les membres de votre famille, vos voisins et vos collègues.</p>
                         <p>En quelques étapes, constituez votre stock de dons, invitez vos relations sur <strong>Give!</strong> et commencez les échanges !</p>
                     </div>
-                    <p>
-                        Sans inscription, il vous suffit de vous connecter avec l'un de vos comptes :</br>
-
+                    <p id="connection-space">
+                        Sans inscription, il vous suffit de vous connecter avec l'un de vos comptes
+                        <p id="connection-space-accounts">
                         @defining(Registry.get("google")) { p =>
-                            <a href="@p.getUrl()">Se connecter avec Google</a>
+                            <a href="@p.getUrl()"><img src="@routes.Assets.at("images/google.png")"/></a>
                         }
+                        </p>
                     </p>
                 </div>
         }
     }
-
     </div>
-
-
 }
