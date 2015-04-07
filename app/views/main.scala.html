@@ -37,17 +37,17 @@
                     @if(auth != null && user != null) {
                     <div class="col-md-2" id="menu">
                         <ul>
-                            <li><img id="icon-catalog" src="@routes.Assets.at("images/catalog.svg")"/><a href="@routes.Catalog.index">Voir le catalogue @if(models.User.getCatalog.size > 0){<span class="badge">@models.User.getCatalog.size</span>}</a></li>
-                            <li><img id="icon-add_gift" src="@routes.Assets.at("images/add_gift.svg")"/> <a href="@routes.Gifts.index">Voir mes objets @if(user.gifts.size > 0) {<span class="badge">@user.gifts.size</span>}</a></li>
-                            <li><img id="icon-myrequests" src="@routes.Assets.at("images/myrequests.svg")"/><a href="@routes.MyRequests.index">Voir mes demandes @if(user.requests.size > 0) {<span class="badge">@user.requests.size</span>}</a></li>
+                            <li><img id="icon-catalog" src="@routes.Assets.at("images/catalog.svg")"/><a href="@routes.Catalog.index">Le catalogue @if(models.User.getCatalog.size > 0){<span class="badge">@models.User.getCatalog.size</span>}</a></li>
+                            <li><img id="icon-add_gift" src="@routes.Assets.at("images/add_gift.svg")"/> <a href="@routes.Gifts.index">Mes objets @if(user.gifts.size > 0) {<span class="badge">@user.gifts.size</span>}</a></li>
+                            <li><img id="icon-myrequests" src="@routes.Assets.at("images/myrequests.svg")"/><a href="@routes.MyRequests.index">Mes envies @if(user.requests.size > 0) {<span class="badge">@user.requests.size</span>}</a></li>
 
                             @if(models.User.getPendingRequests.size > 0) {
                                 <li><img id="icon-requests" src="@routes.Assets.at("images/requests.svg")"/><a href="@routes.Requests.index">
-                                    Répondre aux demandes <span class="badge">@models.User.getPendingRequests.size</span>
+                                    Répondre aux demandes <span class="badge badge-red">@models.User.getPendingRequests.size</span>
                                 </a></li>
                             }
 
-                            <li><img id="icon-contacts" src="@routes.Assets.at("images/contacts.svg")"/><a href="@routes.Users.index">Voir mes contacts <span class="badge">@if(models.User.getContacts.size > 0){ @models.User.getContacts.size</span>}</a></li>
+                            <li><img id="icon-contacts" src="@routes.Assets.at("images/contacts.svg")"/><a href="@routes.Users.index">Mes contacts <span class="badge">@if(models.User.getContacts.size > 0){ @models.User.getContacts.size</span>}</a></li>
                         </ul>
                     </div>
                     <div class="col-md-10">

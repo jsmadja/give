@@ -9,6 +9,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.requests;
+import views.html.gift_give;
 
 import java.util.Map;
 
@@ -31,9 +32,13 @@ public class Requests extends Controller {
         gift.update();
         flash(Application.FLASH_MESSAGE_KEY, "Vous souhaitez donner " + gift.name + " à " + requester.name + ". Un email a été envoyé à " + requester.email);
 
-        new GiveMail(request).send();
+        new GiveMail(request, data.get("description")[0]).send();
         gift.requests.stream().forEach(Model::delete);
         return redirect(routes.Requests.index());
+    }
+
+    public static Result request(Request request) {
+        return ok(gift_give.render(currentUser(), request));
     }
 
 }

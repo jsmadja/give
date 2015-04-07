@@ -6,10 +6,12 @@ import java.util.Map;
 public class GiveMail extends Mail {
 
     private final Request request;
+    private final String description;
 
-    public GiveMail(Request request) {
-        super(request.requester.email);
+    public GiveMail(Request request, String description) {
+        super(request.requester.email, request.gift.giver.email);
         this.request = request;
+        this.description = description;
     }
 
     @Override
@@ -19,6 +21,7 @@ public class GiveMail extends Mail {
             put("giver", request.gift.giver.name);
             Gift gift = request.gift;
             put("gift-name", gift.name);
+            put("description", GiveMail.this.description);
         }};
     }
 

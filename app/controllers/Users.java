@@ -1,7 +1,6 @@
 package controllers;
 
 import com.feth.play.module.pa.PlayAuthenticate;
-import models.Category;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Http;

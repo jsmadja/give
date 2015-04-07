@@ -29,7 +29,7 @@ public class MyRequests extends Controller {
         request.save();
 
         new RequestMail(request).send();
-        flash(Application.FLASH_MESSAGE_KEY, format("Vous avez demandé %s à %s. Un email a été envoyé à %s", request.gift.name, request.gift.giver.name, request.requester.email));
+        flash(Application.FLASH_MESSAGE_KEY, format("Vous avez demandé %s à %s. Un email a été envoyé à %s", request.gift.name, request.gift.giver.name, request.gift.giver.email));
 
         return redirect(routes.Catalog.index());
     }

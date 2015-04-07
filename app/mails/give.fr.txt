@@ -2,6 +2,10 @@ Bonjour,
 
 $giver est d'accord pour vous donner : $gift-name
 
+--
+$description
+--
+
 Cordialement,
 
 l'équipe de Give!

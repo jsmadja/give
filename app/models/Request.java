@@ -3,6 +3,7 @@ package models;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 import play.db.ebean.Model;
+import play.mvc.PathBindable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import static com.avaje.ebean.Expr.ne;
 
 @Entity
 @Table(name = "requests")
-public class Request extends Model {
+public class Request extends Model implements PathBindable<Request> {
 
     public static final Model.Finder<Long, Request> find = new Finder<>(Long.class, Request.class);
 
@@ -52,5 +53,20 @@ public class Request extends Model {
 
     public static List<Request> findRequestsOf(User user) {
         return find.where(eq("requester", user)).findList();
+    }
+
+    @Override
+    public Request bind(String key, String value) {
+        return find.byId(Long.valueOf(value));
+    }
+
+    @Override
+    public String unbind(String s) {
+        return id.toString();
+    }
+
+    @Override
+    public String javascriptUnbind() {
+        return null;
     }
 }

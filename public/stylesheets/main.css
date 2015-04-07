@@ -73,7 +73,7 @@ td img {
 }
 
 #icon-requests {
-    width: 39px;
+    width: 35px;
 }
 
 #icon-contacts {
@@ -99,7 +99,7 @@ td img {
     float: right;
 }
 
-#addGift {
+form {
     background-color: #F2F2F2;
     border-radius: 2px;
     padding: 5px;
@@ -181,4 +181,8 @@ footer {
 
 .flash-message {
     background-color: #16a085;
+}
+
+.badge-red, .label-red {
+    background-color: #e74c3c;
 }

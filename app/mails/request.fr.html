@@ -1,4 +1,4 @@
-Bonjour,
+Bonjour $giver,
 
 <p>
     $requester est intéressé par un de vos objets :
@@ -11,13 +11,12 @@ Bonjour,
         </td>
         <td>
             <span class="gift-category-name">$gift-name</span>
+
             <p>
                 $gift-description
             </p>
-            <form id="give" method="POST" action="http://localhost:9000/give">
-                <input type="hidden" name="requestId" value="$request-id">
-                <input type="submit" class="btn btn-sm btn-primary" value="Je donne !"/>
-            </form>
+
+            <a href="http://www.jsmadja.tk:9876/requests/$request-id">Je donne !</a>
     </tr>
 </table>
 

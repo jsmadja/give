@@ -32,10 +32,7 @@
                         <p>
                         @request.gift.description
                         </p>
-                        <form id="give" method="POST" action="/give">
-                            <input type="hidden" name="requestId" value="@request.id">
-                            <input type="submit" class="btn btn-sm btn-primary" value="Je donne !"/>
-                        </form>
+                        <a id="give" class="btn btn-sm btn-primary" href="/requests/@request.id">Je donne</a>
                     </td>
                 </tr>
             }

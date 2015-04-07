@@ -1,0 +1,41 @@
+@(user: models.User, request: models.Request)
+
+@main("Give!", user) {
+
+    <h1>Dernière étape, fixez un rendez-vous !</h1>
+
+    <table id="requests" class="table table-bordered">
+        <tr>
+            <td>
+            @if(request.gift.photoBase64) {
+                <img src="data:image/jpeg;base64,@request.gift.photoBase64"/>
+            } else {
+                <img src="@routes.Assets.at("images/no_photo.svg")" class="icon-no_photo" />
+            }
+            </td>
+            <td>
+                <span class="user-name">@request.requester.name</span> voudrait <span class="gift-name">@request.gift.name</span>
+                <p>
+                @request.gift.description
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <form action = "@routes.Requests.give.url" method="POST">
+        <input type="hidden" name="requestId" value="@request.id">
+        <div class="form-group">
+            <label for="description">Texte de confirmation du rendez-vous</label>
+            <textarea name="description" rows="8" class="form-control">
+Bonjour @request.requester.name,
+
+Je te propose de nous rencontrer le [Date] à [Lieu] pour te remettre [mon/ma] @request.gift.name.
+
+A bientôt,
+
+@request.gift.giver.name
+            </textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Je donne</button>
+    </form>
+}

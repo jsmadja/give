@@ -19,15 +19,21 @@ import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.String.format;
+import static javax.mail.Message.RecipientType.CC;
 import static javax.mail.Message.RecipientType.TO;
 
 public abstract class Mail {
 
     private final String to;
+    private String from;
 
     public Mail(String to) {
-        checkNotNull(to);
-        this.to = to;
+        this.to = checkNotNull(to);
+    }
+
+    public Mail(String to, String from) {
+        this(to);
+        this.from = checkNotNull(from);
     }
 
     protected abstract String subject();
@@ -72,10 +78,18 @@ public abstract class Mail {
             message.setContent(multipart);
             message.setFrom(new InternetAddress("julien.smadja@free.fr"));
             message.setSubject(subject());
-            message.addRecipient(TO, new InternetAddress(to));
-
+            InternetAddress toAddress = new InternetAddress(to);
+            message.addRecipient(TO, toAddress);
+            Address[] addresses;
+            if (from != null) {
+                InternetAddress fromAddress = new InternetAddress(from);
+                message.addRecipient(CC, fromAddress);
+                addresses = new Address[]{toAddress, fromAddress};
+            } else {
+                addresses = new Address[]{toAddress};
+            }
             transport.connect();
-            transport.sendMessage(message, message.getRecipients(TO));
+            transport.sendMessage(message, addresses);
             transport.close();
         } catch (MessagingException e) {
             throw new IllegalStateException(e);
