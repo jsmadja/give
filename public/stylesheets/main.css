@@ -163,10 +163,18 @@ footer {
     text-align: center;
 }
 
-#connection-space-accounts img {
-    width: 150px;
-    margin-top: 15px;
+#google-connect {
+    height: 51px;
 }
+
+#twitter-connect {
+    height: 39px;
+}
+
+#facebook-connect {
+    height: 58px;
+}
+
 
 .flash-error, .flash-message {
     color: white;

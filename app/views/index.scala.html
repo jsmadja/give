@@ -73,11 +73,11 @@
         } else {
             <div class="row">
                 <div class="col-md-2"></div>
-                <div class="col-md-10">
+                <div class="col-md-10" style="text-align: center;">
 
                     <h1>Ne jetez plus, ne stockez plus, donnez !</h1>
 
-                    <div class="alert alert-info" style="margin-top: 50px">
+                    <div class="alert" style="margin-top: 50px; text-align: left; font-size: 18px;">
                         <p><strong>Give!</strong> vous permet de vous séparer facilement des objets dont vous ne vous servez plus.</p>
                         <p>Vous êtes les mieux placés pour savoir à qui vous souhaitez les donner : vos amis, les membres de votre famille, vos voisins et vos collègues.</p>
                         <p>En quelques étapes, constituez votre stock de dons, invitez vos relations sur <strong>Give!</strong> et commencez les échanges !</p>
@@ -85,8 +85,19 @@
                     <p id="connection-space">
                         Sans inscription, il vous suffit de vous connecter avec l'un de vos comptes
                         <p id="connection-space-accounts">
-                        @defining(Registry.get("google")) { p =>
-                            <a href="@p.getUrl()"><img src="@routes.Assets.at("images/google.png")"/></a>
+                        @defining(Registry.get("google")) { google =>
+
+                            <a href="@google.getUrl()"><img id="google-connect" src="@routes.Assets.at("images/google.png")"/></a>
+                        }
+
+                        @defining(Registry.get("facebook")) { facebook =>
+
+                            <a href="@facebook.getUrl()"><img id="facebook-connect" src="@routes.Assets.at("images/facebook.png")"/></a>
+                        }
+
+                        @defining(Registry.get("twitter")) { twitter =>
+
+                           <a href="@twitter.getUrl()"><img id="twitter-connect" src="@routes.Assets.at("images/twitter.png")"/></a>
                         }
                         </p>
                     </p>
