@@ -102,15 +102,11 @@ public class User extends Model implements PathBindable<User> {
     }
 
     public static List<Request> getPendingRequests() {
-        return Request.findAllPendingRequestsOf(currentUser());
+        return Request.findFriendRequestsOf(currentUser());
     }
 
     public static List<User> getContacts() {
         return find.all();
-    }
-
-    public static List<Request> getMyRequests() {
-        return Request.findRequestsOf(currentUser());
     }
 
     @Override

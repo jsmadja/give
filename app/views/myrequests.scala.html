@@ -4,7 +4,7 @@
 
     <h1>Mes demandes</h1>
 
-    @if(models.User.getMyRequests.isEmpty) {
+    @if(user.requests.isEmpty) {
         <p>Aucune demande pour le moment ...</p>
 
         <div class="alert alert-info" role="alert">
@@ -14,7 +14,7 @@
     } else {
 
         <table id="myrequests" class="table table-bordered">
-        @for(request <- models.User.getMyRequests.toSeq.sortBy(_.gift.name).groupBy(_.gift.category).flatMap(_._2)) {
+        @for(request <- user.requests.toSeq.sortBy(_.gift.name).groupBy(_.gift.category).flatMap(_._2)) {
             <tr>
                 <td>
                 @if(request.gift.photoBase64) {
@@ -22,7 +22,7 @@
                 }
                 </td>
                 <td>
-                    <span class="user-name">@request.requester.name</span>
+                    <span class="user-name">@request.gift.giver.name</span>
                     donne <span class="gift-name">@request.gift.name</span>
                     <span class="gift-category-name">@request.gift.category.name</span>
                     <p>

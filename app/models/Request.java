@@ -32,6 +32,14 @@ public class Request extends Model {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    public static List<Request> findFriendRequestsOf(User user) {
+        List<Request> requests = new ArrayList<>();
+        for (Gift gift : user.gifts) {
+            requests.addAll(gift.requests);
+        }
+        return requests;
+    }
+
     public static List<Gift> findRequestedGiftsOf(User user) {
         List<Gift> gifts = new ArrayList<>();
         for (Request request : user.requests) {
@@ -41,11 +49,6 @@ public class Request extends Model {
         }
         return gifts;
     }
-
-    public static List<Request> findAllPendingRequestsOf(User user) {
-        return find.where(ne("requester", user)).findList();
-    }
-
 
     public static List<Request> findRequestsOf(User user) {
         return find.where(eq("requester", user)).findList();

@@ -2,8 +2,8 @@
 
 @main("Give!", user) {
 
+    <h1>Les objets à donner par @user.name</h1>
     @if(!user.gifts.isEmpty) {
-        <h1>Les objets à donner</h1>
 
         <ul>
         @for(giftsByCategories <- user.gifts.toSeq.groupBy(_.category)) {
@@ -37,6 +37,8 @@
             }
             </table>
         }
+    } else {
+        <p>Aucun objet disponible pour le moment ...</p>
     }
 
 }
