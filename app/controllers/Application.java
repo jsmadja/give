@@ -13,6 +13,11 @@ public class Application extends Controller {
     public static final String FLASH_MESSAGE_KEY = "message";
     public static final String FLASH_ERROR_KEY = "error";
 
+    public static Result mail() {
+        new InvitationMail("julien.smadja@gmail.com").send();
+        return ok();
+    }
+
     public static Result index() {
         return ok(index.render(getLocalUser(session())));
     }

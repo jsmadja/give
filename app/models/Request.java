@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.avaje.ebean.Expr.eq;
 import static com.avaje.ebean.Expr.ne;
 
 @Entity
@@ -20,20 +21,16 @@ public class Request extends Model {
     @Id
     @GeneratedValue
     public Long id;
-
+    @ManyToOne
+    public User requester;
+    @ManyToOne
+    public Gift gift;
     @CreatedTimestamp
     @Column(name = "created_at")
     private Date createdAt;
-
     @UpdatedTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
-
-    @ManyToOne
-    public User requester;
-
-    @ManyToOne
-    public Gift gift;
 
     public static List<Gift> findRequestedGiftsOf(User user) {
         List<Gift> gifts = new ArrayList<>();
@@ -45,7 +42,12 @@ public class Request extends Model {
         return gifts;
     }
 
-    public static List<Request> findAllRequestsFor(User user) {
+    public static List<Request> findAllPendingRequestsOf(User user) {
         return find.where(ne("requester", user)).findList();
+    }
+
+
+    public static List<Request> findRequestsOf(User user) {
+        return find.where(eq("requester", user)).findList();
     }
 }
