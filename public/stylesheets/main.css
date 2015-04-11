@@ -40,8 +40,9 @@ td img {
 
 #user-space {
     text-transform: capitalize;
-    text-align: right;
+    float: right;
     line-height: 77px;
+    display: inline-block;
 }
 
 #header {
@@ -52,10 +53,10 @@ td img {
 
 #title {
     font-size: 24px;
-    text-align: center;
+    text-align: left;
 }
 
-#title a {
+#text-title {
     color: white;
     font-size: 54px;
 }

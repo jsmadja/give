@@ -9,7 +9,6 @@ POST        /give                                   controllers.Requests.give
 GET         /myrequests                             controllers.MyRequests.index
 GET         /requests                               controllers.Requests.index
 GET         /requests/:request                      controllers.Requests.request(request: models.Request)
-GET         /catalog                                controllers.Catalog.index
 GET         /gifts                                  controllers.Gifts.index
 GET         /users                                  controllers.Users.index
 GET         /users/:user                            controllers.Users.read(user: models.User)

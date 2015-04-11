@@ -30,7 +30,7 @@ public class MyRequests extends Controller {
         request.save();
         new RequestMail(request).send();
         flash(FLASH_MESSAGE_KEY, format("Vous avez demandé un objet à %s. Un email a été envoyé !", request.gift.giver.name));
-        return redirect(routes.Catalog.index());
+        return redirect(routes.Application.index());
     }
 
     public static Result removeRequest() {

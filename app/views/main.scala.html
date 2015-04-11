@@ -17,17 +17,16 @@
     <body>
         <div class="container-fluid">
             <div class="row" id="header">
-                <div class="col-md-2"></div>
-                <div id="title"  class="col-md-8">
-                <a href="/">Give!</a>
-                </div>
-                <div class="col-md-2" id="user-space">
-                    @currentAuth() { auth =>
+                <div id="title"  class="col-md-12">
+                    <a id="text-title" href="/">Give!</a>
+                    <div id="user-space">
+                        @currentAuth() { auth =>
 
-                        @if(auth != null && user != null) {
-                            <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout"><img id="icon-logout" src="@routes.Assets.at("images/logout.svg")" /></a> @user.name
+                            @if(auth != null && user != null) {
+                                <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout"><img id="icon-logout" src="@routes.Assets.at("images/logout.svg")" /></a> @user.name
+                            }
                         }
-                    }
+                    </div>
                 </div>
             </div>
 
@@ -37,7 +36,7 @@
                     @if(auth != null && user != null) {
                     <div class="col-md-2" id="menu">
                         <ul>
-                            <li><img id="icon-catalog" src="@routes.Assets.at("images/catalog.svg")"/><a href="@routes.Catalog.index">Le catalogue @if(user.getCatalog.size > 0){<span class="badge">@user.getCatalog.size</span>}</a></li>
+                            <li><img id="icon-catalog" src="@routes.Assets.at("images/catalog.svg")"/><a href="@routes.Application.index">Le catalogue @if(user.getCatalog.size > 0){<span class="badge">@user.getCatalog.size</span>}</a></li>
                             <li><img id="icon-add_gift" src="@routes.Assets.at("images/add_gift.svg")"/> <a href="@routes.Gifts.index">Mes objets @if(user.gifts.size > 0) {<span class="badge">@user.gifts.size</span>}</a></li>
                             <li><img id="icon-myrequests" src="@routes.Assets.at("images/myrequests.svg")"/><a href="@routes.MyRequests.index">Mes envies @if(user.requests.size > 0) {<span class="badge">@user.requests.size</span>}</a></li>
 
