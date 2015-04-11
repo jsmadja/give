@@ -13,6 +13,7 @@ import views.html.users_read;
 import java.io.IOException;
 import java.util.Map;
 
+import static controllers.Application.FLASH_ERROR_KEY;
 import static controllers.Application.FLASH_MESSAGE_KEY;
 import static models.LinkType.LINKED;
 import static models.LinkType.REFUSED;
@@ -50,6 +51,8 @@ public class Users extends Controller {
         } else {
             if (invitee.hasInvited(inviter)) {
                 linkWithExistingUser(email, invitee, inviter);
+            } else if (inviter.hasInvited(invitee)) {
+                flash(FLASH_ERROR_KEY, "Vous avez déjà invité " + email);
             } else {
                 sendInvitationToExistingUser(email, invitee, inviter);
             }
