@@ -4,21 +4,6 @@
 
     <h1>Dernière étape, fixez un rendez-vous !</h1>
 
-    <table id="requests" class="table table-bordered">
-        <tr>
-            <td>
-            @if(request.gift.photoBase64) {
-                <img src="data:image/jpeg;base64,@request.gift.photoBase64"/>
-            } else {
-                <img src="@routes.Assets.at("images/no_photo.svg")" class="icon-no_photo" />
-            }
-            </td>
-            <td>
-                <span class="user-name">@request.requester.name</span> voudrait <span class="gift-name">@request.gift.name</span>
-            </td>
-        </tr>
-    </table>
-
     <form action = "@routes.Requests.give.url" method="POST">
         <input type="hidden" name="requestId" value="@request.id">
         <div class="form-group">
@@ -26,7 +11,7 @@
             <textarea name="description" rows="8" class="form-control">
 Bonjour @request.requester.name,
 
-Je te propose de nous rencontrer le [Date] à [Lieu] pour te remettre [mon/ma] @request.gift.name.
+Je te propose de nous rencontrer le [Date] à [Lieu] pour te remettre cet objet.
 
 A bientôt,
 
@@ -35,4 +20,7 @@ A bientôt,
         </div>
         <button type="submit" class="btn btn-success">Je donne</button>
     </form>
+
+    <img class="thumbnail" style="margin-left: auto; margin-right: auto;" src="data:image/jpeg;base64,@request.gift.photoBase64"/>
+
 }

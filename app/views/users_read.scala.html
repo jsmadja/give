@@ -4,26 +4,19 @@
 
     <h1>Les objets à donner par @user.name</h1>
     @if(!user.gifts.isEmpty) {
-        <table id="gifts" class="table table-bordered">
         @for(gift <- user.gifts) {
-            <tr>
-                <td>
-                @if(gift.photoBase64) {
-                    <img src="data:image/jpeg;base64,@gift.photoBase64"/>
-                } else {
-                    <img src="@routes.Assets.at("images/no_photo.svg")" class="icon-no_photo" />
+            <div class="gift thumbnail">
+                <p class="user-name">@gift.giver.name</p>
+                <img src="data:image/jpeg;base64,@gift.photoBase64"/>
+                @if(gift.name) {
+                    <p title="@gift.name">Voir la description</p>
                 }
-                </td>
-                <td>
-                    <span class="gift-name">@gift.name</span>
-                    <form id="addRequest" method="POST" action="@routes.MyRequests.addRequest">
-                        <input type="hidden" value="@gift.id" name="giftId" />
-                        <input type="submit" class="btn btn-sm btn-primary" value="Je prends" />
-                    </form>
-                </td>
-            </tr>
+                <form id="addRequest" method="POST" action="requests">
+                    <input type="hidden" value="@gift.id" name="giftId" />
+                    <button type="submit" class="btn btn-sm btn-primary">Je prends</button>
+                </form>
+            </div>
         }
-        </table>
     } else {
         <p>Aucun objet disponible pour le moment ...</p>
     }

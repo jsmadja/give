@@ -42,7 +42,6 @@
 
     @if(!user.gifts.isEmpty) {
         <h1>Mes objets à donner</h1>
-        <table id="gifts" class="table table-bordered">
         @for(gift <- user.gifts) {
             <div class="gift thumbnail">
                 <img src="data:image/jpeg;base64,@gift.photoBase64"/>
@@ -55,7 +54,6 @@
                 </form>
             </div>
         }
-        </table>
     }
 
 }

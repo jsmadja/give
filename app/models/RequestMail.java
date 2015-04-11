@@ -27,7 +27,7 @@ public class RequestMail extends Mail {
 
     @Override
     protected String subject() {
-        return request.requester.name + " est intéressé(e) par " + request.gift.name;
+        return request.requester.name + " est intéressé(e) par un de vos objets";
     }
 
     @Override

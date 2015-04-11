@@ -14,25 +14,19 @@
 
     } else {
 
-        <table id="myrequests" class="table table-bordered">
         @for(request <- user.requests) {
-            <tr>
-                <td>
-                @if(request.gift.photoBase64) {
-                    <img src="data:image/jpeg;base64,@request.gift.photoBase64"/>
+            <div class="gift thumbnail">
+                <p class="user-name">@request.gift.giver.name</p>
+                <img src="data:image/jpeg;base64,@request.gift.photoBase64"/>
+                @if(request.gift.name) {
+                    <p title="@request.gift.name">Voir la description</p>
                 }
-                </td>
-                <td>
-                    <span class="user-name">@request.gift.giver.name</span>
-                    donne <span class="gift-name">@request.gift.name</span>
-                    <form id="removeRequest" action = "@routes.MyRequests.removeRequest" method="POST">
-                        <input type="hidden" value="@request.id" name="requestId" />
-                        <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
-                    </form>
-                </td>
-            </tr>
+                <form id="removeRequest" action = "@routes.MyRequests.removeRequest" method="POST">
+                    <input type="hidden" value="@request.id" name="requestId" />
+                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                </form>
+            </div>
         }
-        </table>
     }
 
 }

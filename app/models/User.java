@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.Expr;
 import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
@@ -111,7 +112,7 @@ public class User extends Model implements PathBindable<User> {
     }
 
     public static List<User> getContacts() {
-        return find.all();
+        return find.where(Expr.ne("id", currentUser().id)).findList();
     }
 
     @Override

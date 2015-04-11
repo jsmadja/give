@@ -7,24 +7,13 @@
     @if(models.User.getPendingRequests.isEmpty) {
         <p>Vous n'avez pas de demandes en attente</p>
     } else {
-        <table id="requests" class="table table-bordered">
         @for(request <- models.User.getPendingRequests) {
-            <tr>
-                <td>
-                @if(request.gift.photoBase64) {
-                    <img src="data:image/jpeg;base64,@request.gift.photoBase64"/>
-                } else {
-                    <img src="@routes.Assets.at("images/no_photo.svg")" class="icon-no_photo" />
-                }
-                </td>
-                <td>
-                    <span class="user-name">@request.requester.name</span>
-                    voudrait <span class="gift-name">@request.gift.name</span>
-                    <a id="give" class="btn btn-sm btn-primary" href="/requests/@request.id">Je donne</a>
-                </td>
-            </tr>
+            <div class="gift thumbnail">
+                <p class="user-name">@request.gift.giver.name</p>
+                <img src="data:image/jpeg;base64,@request.gift.photoBase64"/>
+                <a id="give" class="btn btn-sm btn-primary" href="/requests/@request.id">Je donne</a>
+            </div>
         }
-        </table>
     }
 
 }

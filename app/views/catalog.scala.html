@@ -1,36 +1,29 @@
 @(user: models.User)
 
-@main("Give! - Catalog", user) {
-    <h1>Vos contacts donnent ces objets</h1>
+    @main("Give! - Catalog", user) {
+        <h1>Vos contacts donnent ces objets</h1>
 
-    @if(models.User.getCatalog.isEmpty) {
-        <p>Aucun objet disponible pour le moment ...</p>
+        @if(models.User.getCatalog.isEmpty) {
+            <p>Aucun objet disponible pour le moment ...</p>
 
-        <div class="alert alert-info" role="alert">
-            <strong>Astuce !</strong> Ajoutez de nouvelles relations en allant sur <a href="/users">la page de gestion de contacts ...</a>
-        </div>
+            <div class="alert alert-info" role="alert">
+                <strong>Astuce !</strong> Ajoutez de nouvelles relations en allant sur <a href="/users">
+                la page de gestion de contacts ...</a>
+            </div>
 
-    } else {
-        <table id="catalog" class="table table-bordered">
-        @for(gift <- models.User.getCatalog.toSeq) {
-            <tr>
-                <td>
-                    @if(gift.photoBase64) {
-                        <img src="data:image/jpeg;base64,@gift.photoBase64"/>
-                    } else {
-                        <img src="@routes.Assets.at("images/no_photo.svg")" class="icon-no_photo" />
+        } else {
+            @for(gift <- models.User.getCatalog) {
+                <div class="gift thumbnail">
+                    <p class="user-name">@gift.giver.name</p>
+                    <img src="data:image/jpeg;base64,@gift.photoBase64"/>
+                    @if(gift.name) {
+                        <p title="@gift.name">Voir la description</p>
                     }
-                </td>
-                <td>
-                    <span class="user-name">@gift.giver.name</span> donne <span class="gift-name">@gift.name</span>
                     <form id="addRequest" method="POST" action="requests">
                         <input type="hidden" value="@gift.id" name="giftId" />
-                        <input type="submit" class="btn btn-sm btn-primary" value="Je prends" />
+                        <button type="submit" class="btn btn-sm btn-primary">Je prends</button>
                     </form>
-                </td>
-            </tr>
+                </div>
+            }
         }
-        </table>
     }
-
-}
