@@ -2,11 +2,10 @@
 
 @main("Give!", user) {
 
-    <h1>Les objets à donner par @user.name</h1>
+    <h1>Ce que donne @user.name</h1>
     @if(!user.getAvailableGifts.isEmpty) {
         @for(gift <- user.gifts) {
             <div class="gift thumbnail">
-                <p class="user-name">@gift.giver.name</p>
                 <img src="data:image/jpeg;base64,@gift.photoBase64"/>
                 @if(gift.name) {
                     <p title="@gift.name">Voir la description</p>

@@ -37,8 +37,8 @@
                     <div class="col-md-2" id="menu">
                         <ul>
                             <li><img id="icon-catalog" src="@routes.Assets.at("images/catalog.svg")"/><a href="@routes.Application.index">Le catalogue @if(user.getCatalog.size > 0){<span class="badge">@user.getCatalog.size</span>}</a></li>
-                            <li><img id="icon-add_gift" src="@routes.Assets.at("images/add_gift.svg")"/> <a href="@routes.Gifts.index">Mes objets @if(user.gifts.size > 0) {<span class="badge">@user.gifts.size</span>}</a></li>
-                            <li><img id="icon-myrequests" src="@routes.Assets.at("images/myrequests.svg")"/><a href="@routes.MyRequests.index">Mes envies @if(user.requests.size > 0) {<span class="badge">@user.requests.size</span>}</a></li>
+                            <li><img id="icon-add_gift" src="@routes.Assets.at("images/add_gift.svg")"/> <a href="@routes.Gifts.index">Mes dons @if(user.gifts.size > 0) {<span class="badge">@user.gifts.size</span>}</a></li>
+                            <li><img id="icon-myrequests" src="@routes.Assets.at("images/myrequests.svg")"/><a href="@routes.MyRequests.index">Mes acquisitions en attente @if(user.requests.size > 0) {<span class="badge">@user.requests.size</span>}</a></li>
 
                             @if(user.getPendingRequests.size > 0) {
                                 <li><img id="icon-requests" src="@routes.Assets.at("images/requests.svg")"/><a href="@routes.Requests.index">
