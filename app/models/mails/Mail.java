@@ -13,6 +13,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,7 +77,7 @@ public abstract class Mail {
             multipart.addBodyPart(part2);
 
             message.setContent(multipart);
-            message.setFrom(new InternetAddress("julien.smadja@free.fr"));
+            message.setFrom(new InternetAddress("noreply@igiveyou.fr", "I Give You"));
             message.setSubject(subject());
             InternetAddress toAddress = new InternetAddress(to);
             message.addRecipient(TO, toAddress);
@@ -91,7 +92,7 @@ public abstract class Mail {
             transport.connect();
             transport.sendMessage(message, addresses);
             transport.close();
-        } catch (MessagingException e) {
+        } catch (MessagingException | UnsupportedEncodingException e) {
             throw new IllegalStateException(e);
         }
     }

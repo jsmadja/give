@@ -27,8 +27,7 @@ public class MailerPlugin extends Plugin {
         properties = new Properties();
         properties.put("mail.transport.protocol", "smtp");
         properties.put("mail.smtp.host", application.configuration().getString(SMTP_HOST_NAME));
-        properties.put("mail.smtp.port", 587);
-        properties.put("mail.smtp.starttls.enable", true); // added this line
+        properties.put("mail.smtp.port", 25);
         properties.put("mail.smtp.auth", "true");
         authenticator = new SMTPAuthenticator();
         Logger.info("Using Mailer: " + application.configuration().getString(SMTP_HOST_NAME));
@@ -36,9 +35,6 @@ public class MailerPlugin extends Plugin {
 
     @Override
     public boolean enabled() {
-        if(true) {
-            return true;
-        }
         return application.configuration().keys().contains(SMTP_HOST_NAME) &&
                 application.configuration().keys().contains(SMTP_AUTH_USER) &&
                 application.configuration().keys().contains(SMTP_AUTH_PWD);
