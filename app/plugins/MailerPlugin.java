@@ -1,10 +1,7 @@
 package plugins;
 
-import models.InvitationMail;
-import models.Mail;
 import play.Application;
 import play.Logger;
-import play.Play;
 import play.Plugin;
 
 import javax.mail.PasswordAuthentication;

@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.avaje.ebean.Expr.ne;
+import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Table(name = "gifts")
@@ -38,7 +39,7 @@ public class Gift extends Model {
     @ManyToOne
     public User giver;
 
-    @OneToMany(mappedBy = "gift", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "gift", cascade = ALL)
     public List<Request> requests;
 
     public boolean given;

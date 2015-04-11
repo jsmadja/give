@@ -1,4 +1,4 @@
-package models;
+package models.mails;
 
 import com.google.common.base.Strings;
 import com.google.common.io.Files;
@@ -113,7 +113,7 @@ public abstract class Mail {
     }
 
     protected Map<String, String> values() {
-        return new HashMap<String, String>();
+        return new HashMap<>();
     }
 
     public enum Format {

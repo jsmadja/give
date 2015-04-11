@@ -186,8 +186,12 @@ public class User extends Model implements PathBindable<User> {
         return Contact.find.where().eq("inviter", this).eq("invitee", invitee).findRowCount() > 0;
     }
 
-    public Contact getContactOf(User inviter) {
-        return Contact.find.where().eq("invitee", this).eq("inviter", inviter).findUnique();
+    public Contact getContactWith(User inviter) {
+        Contact unique = Contact.find.where().eq("invitee", this).eq("inviter", inviter).findUnique();
+        if(unique == null) {
+            unique = Contact.find.where().eq("invitee", inviter).eq("inviter", this).findUnique();
+        }
+        return unique;
     }
 
     public List<Contact> getPendingContacts() {

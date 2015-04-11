@@ -10,6 +10,7 @@ import views.html.myrequests;
 
 import java.util.Map;
 
+import static controllers.Application.FLASH_MESSAGE_KEY;
 import static controllers.Users.currentUser;
 import static java.lang.String.format;
 
@@ -27,10 +28,8 @@ public class MyRequests extends Controller {
         request.gift = Gift.find.byId(id);
         request.requester = currentUser();
         request.save();
-
         new RequestMail(request).send();
-        flash(Application.FLASH_MESSAGE_KEY, format("Vous avez demandé un objet à %s. Un email a été envoyé !", request.gift.giver.name, request.gift.giver.email));
-
+        flash(FLASH_MESSAGE_KEY, format("Vous avez demandé un objet à %s. Un email a été envoyé !", request.gift.giver.name));
         return redirect(routes.Catalog.index());
     }
 
@@ -38,10 +37,8 @@ public class MyRequests extends Controller {
         Map<String, String[]> data = request().body().asFormUrlEncoded();
         Long id = Long.parseLong(data.get("requestId")[0]);
         Request request = Request.find.byId(id);
-        flash(Application.FLASH_MESSAGE_KEY, "Vous avez supprimé votre demande");
-
+        flash(FLASH_MESSAGE_KEY, "Vous avez supprimé votre demande");
         request.delete();
-
         return redirect(routes.MyRequests.index());
     }
 

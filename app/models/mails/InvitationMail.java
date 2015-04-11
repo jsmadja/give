@@ -1,4 +1,4 @@
-package models;
+package models.mails;
 
 import java.util.HashMap;
 import java.util.Map;

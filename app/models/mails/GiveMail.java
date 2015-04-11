@@ -1,4 +1,7 @@
-package models;
+package models.mails;
+
+import models.Gift;
+import models.Request;
 
 import java.util.HashMap;
 import java.util.Map;

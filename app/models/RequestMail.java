@@ -1,5 +1,7 @@
 package models;
 
+import models.mails.Mail;
+
 import java.util.HashMap;
 import java.util.Map;
 

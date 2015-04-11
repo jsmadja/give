@@ -1,6 +1,6 @@
 package controllers;
 
-import models.InvitationMail;
+import models.mails.InvitationMail;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.about;
