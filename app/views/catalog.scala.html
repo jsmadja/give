@@ -1,9 +1,9 @@
 @(user: models.User)
 
     @main("Give! - Catalog", user) {
-        <h1>Vos contacts donnent ces objets</h1>
 
-        @if(models.User.getCatalog.isEmpty) {
+        <h1>Vos contacts donnent ces objets</h1>
+        @if(user.getCatalog.isEmpty) {
             <p>Aucun objet disponible pour le moment ...</p>
 
             <div class="alert alert-info" role="alert">
@@ -12,7 +12,7 @@
             </div>
 
         } else {
-            @for(gift <- models.User.getCatalog) {
+            @for(gift <- user.getCatalog) {
                 <div class="gift thumbnail">
                     <p class="user-name">@gift.giver.name</p>
                     <img src="data:image/jpeg;base64,@gift.photoBase64"/>

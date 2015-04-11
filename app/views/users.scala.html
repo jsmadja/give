@@ -2,15 +2,13 @@
 
 @main("Give! - Contacts", user) {
 
-    <h1>Inviter un ami</h1>
-    <form id="inviteFriend" action = "@routes.Users.invite" method="POST">
-        <div class="form-group">
+    <h1>Invitez quelqu'un de votre entourage</h1>
+    <form id="inviteFriend" class="form-inline" action="@routes.Users.invite" method="POST">
+        <div class="form-group" style="width: 100%;">
             <label for="email">Email de votre ami(e)</label>
-            <input type="email" name="email" required>
-        </div>
-        <p>
+            <input type="email" name="email" class="form-control" placeholder="carole.lunel@@gmail.com" required style="width: 20%;">
             <button type="submit" class="btn btn-success">Envoyer l'invitation</button>
-        </p>
+        </div>
     </form>
 
     @if(!user.getLinkedUsers.isEmpty) {

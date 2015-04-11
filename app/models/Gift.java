@@ -43,8 +43,4 @@ public class Gift extends Model {
 
     public boolean given;
 
-    public static List<Gift> findAllGiftsFor(User user) {
-        return find.where(ne("giver", user)).findList();
-    }
-
 }

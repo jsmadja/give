@@ -18,8 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.avaje.ebean.Expr.*;
-import static controllers.Users.currentUser;
-import static models.Gift.findAllGiftsFor;
+import static models.LinkType.INVITED;
 import static models.LinkType.LINKED;
 
 @Entity
@@ -91,7 +90,7 @@ public class User extends Model implements PathBindable<User> {
         User user = null;
         if (authUser instanceof EmailIdentity) {
             String email = ((EmailIdentity) authUser).getEmail();
-            user = find.where().eq("email", email).findUnique();
+            user = findByEmail(email);
         }
         if (user == null) {
             user = new User();
@@ -120,28 +119,46 @@ public class User extends Model implements PathBindable<User> {
         return user;
     }
 
-    public static List<Gift> getCatalog() {
-        User user = currentUser();
-        List<Gift> availableGifts = findAllGiftsFor(user);
-        List<Gift> requestedGifts = Request.findRequestedGiftsOf(user);
-        availableGifts.removeAll(requestedGifts);
-        return availableGifts;
-    }
-
-    public static List<Request> getPendingRequests() {
-        return Request.findFriendRequestsOf(currentUser());
-    }
-
     public static User findByEmail(String email) {
         return find.where(eq("email", email)).findUnique();
     }
 
+    public List<Request> getPendingRequests() {
+        List<Request> requests = new ArrayList<>();
+        for (Gift gift : gifts) {
+            requests.addAll(gift.requests);
+        }
+        return requests;
+    }
+
+    public List<Gift> getCatalog() {
+        List<Gift> availableGifts = new ArrayList<>();
+        for (User linkedUser : getLinkedUsers()) {
+            availableGifts.addAll(linkedUser.getAvailableGifts());
+        }
+        List<Gift> requestedGifts = findRequestedGifts();
+        availableGifts.removeAll(requestedGifts);
+        return availableGifts;
+    }
+
+    public List<Gift> findRequestedGifts() {
+        List<Gift> gifts = new ArrayList<>();
+        List<Request> requests = Request.find.where().eq("gift.given", false).eq("requester", this).findList();
+        for (Request request : requests) {
+            gifts.add(request.gift);
+        }
+        return gifts;
+    }
+
+    private List<Gift> getAvailableGifts() {
+        return Gift.find.where().eq("giver", this).eq("given", false).findList();
+    }
+
     public List<User> getLinkedUsers() {
         List<User> linkedUsers = new ArrayList<>();
-        User currentUser = currentUser();
-        List<Contact> contacts = Contact.find.where(and(eq("type", LINKED), or(eq("invitee", currentUser), eq("inviter", currentUser)))).findList();
+        List<Contact> contacts = Contact.find.where(and(eq("type", LINKED), or(eq("invitee", this), eq("inviter", this)))).findList();
         for (Contact contact : contacts) {
-            if (contact.invitee.equals(currentUser)) {
+            if (contact.invitee.equals(this)) {
                 linkedUsers.add(contact.inviter);
             } else {
                 linkedUsers.add(contact.invitee);
@@ -166,41 +183,19 @@ public class User extends Model implements PathBindable<User> {
     }
 
     public boolean hasInvited(User invitee) {
-        for (Contact contact : contactsAsInviter) {
-            if (contact.invitee.equals(invitee)) {
-                return true;
-            }
-        }
-        return false;
+        return Contact.find.where().eq("inviter", this).eq("invitee", invitee).findRowCount() > 0;
     }
 
     public Contact getContactOf(User inviter) {
-        for (Contact contact : contactsAsInvitee) {
-            if (contact.inviter.equals(inviter)) {
-                return contact;
-            }
-        }
-        return null;
+        return Contact.find.where().eq("invitee", this).eq("inviter", inviter).findUnique();
     }
 
     public List<Contact> getPendingContacts() {
-        List<Contact> pendingContacts = new ArrayList<>();
-        for (Contact contact : contactsAsInviter) {
-            if (contact.type == LinkType.INVITED) {
-                pendingContacts.add(contact);
-            }
-        }
-        return pendingContacts;
+        return Contact.find.where().eq("inviter", this).eq("type", INVITED).findList();
     }
 
     public List<Contact> getPendingInvitations() {
-        List<Contact> pendingInvitations = new ArrayList<>();
-        for (Contact contact : contactsAsInvitee) {
-            if (contact.type == LinkType.INVITED) {
-                pendingInvitations.add(contact);
-            }
-        }
-        return pendingInvitations;
+        return Contact.find.where().eq("invitee", this).eq("type", INVITED).findList();
     }
 
 }

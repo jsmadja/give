@@ -37,24 +37,6 @@ public class Request extends Model implements PathBindable<Request> {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    public static List<Request> findFriendRequestsOf(User user) {
-        List<Request> requests = new ArrayList<>();
-        for (Gift gift : user.gifts) {
-            requests.addAll(gift.requests);
-        }
-        return requests;
-    }
-
-    public static List<Gift> findRequestedGiftsOf(User user) {
-        List<Gift> gifts = new ArrayList<>();
-        for (Request request : user.requests) {
-            if (!gifts.contains(request.gift)) {
-                gifts.add(request.gift);
-            }
-        }
-        return gifts;
-    }
-
     @Override
     public Request bind(String key, String value) {
         return find.byId(Long.valueOf(value));

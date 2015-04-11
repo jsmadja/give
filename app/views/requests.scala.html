@@ -4,10 +4,10 @@
 
     <h1>Demandes en cours</h1>
 
-    @if(models.User.getPendingRequests.isEmpty) {
+    @if(user.getPendingRequests.isEmpty) {
         <p>Vous n'avez pas de demandes en attente</p>
     } else {
-        @for(request <- models.User.getPendingRequests) {
+        @for(request <- user.getPendingRequests) {
             <div class="gift thumbnail">
                 <p class="user-name">@request.gift.giver.name</p>
                 <img src="data:image/jpeg;base64,@request.gift.photoBase64"/>
