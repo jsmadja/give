@@ -9,12 +9,14 @@ public class IntegrationTest {
     @Test
     @Ignore
     public void sendMail() {
+        /*
         System.setProperty("mail.smtp.auth.pwd", "******");
         running(fakeApplication(inMemoryDatabase("test")), new Runnable() {
             public void run() {
                 Application.mail();
             }
         });
+        */
     }
 
 }

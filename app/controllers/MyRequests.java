@@ -2,7 +2,7 @@ package controllers;
 
 import models.Gift;
 import models.Request;
-import models.RequestMail;
+import models.mails.RequestMail;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -28,7 +28,7 @@ public class MyRequests extends Controller {
         request.gift = Gift.find.byId(id);
         request.requester = currentUser();
         request.save();
-        new RequestMail(request).send();
+        new RequestMail(request, Application.website).send();
         flash(FLASH_MESSAGE_KEY, format("Vous avez demandé un objet à %s. Un email a été envoyé !", request.gift.giver.name));
         return redirect(routes.Application.index());
     }

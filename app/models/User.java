@@ -17,7 +17,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static com.avaje.ebean.Expr.*;
+import static com.avaje.ebean.Expr.and;
+import static com.avaje.ebean.Expr.eq;
 import static models.LinkType.INVITED;
 import static models.LinkType.LINKED;
 
@@ -150,19 +151,19 @@ public class User extends Model implements PathBindable<User> {
         return gifts;
     }
 
-    private List<Gift> getAvailableGifts() {
+    public List<Gift> getAvailableGifts() {
         return Gift.find.where().eq("giver", this).eq("given", false).findList();
     }
 
     public List<User> getLinkedUsers() {
         List<User> linkedUsers = new ArrayList<>();
-        List<Contact> contacts = Contact.find.where(and(eq("type", LINKED), or(eq("invitee", this), eq("inviter", this)))).findList();
+        List<Contact> contacts = Contact.find.where(and(eq("type", LINKED), eq("invitee", this))).findList();
         for (Contact contact : contacts) {
-            if (contact.invitee.equals(this)) {
-                linkedUsers.add(contact.inviter);
-            } else {
-                linkedUsers.add(contact.invitee);
-            }
+            linkedUsers.add(contact.inviter);
+        }
+        contacts = Contact.find.where(and(eq("type", LINKED), eq("inviter", this))).findList();
+        for (Contact contact : contacts) {
+            linkedUsers.add(contact.invitee);
         }
         return linkedUsers;
     }
@@ -188,7 +189,7 @@ public class User extends Model implements PathBindable<User> {
 
     public Contact getContactWith(User inviter) {
         Contact unique = Contact.find.where().eq("invitee", this).eq("inviter", inviter).findUnique();
-        if(unique == null) {
+        if (unique == null) {
             unique = Contact.find.where().eq("invitee", inviter).eq("inviter", this).findUnique();
         }
         return unique;

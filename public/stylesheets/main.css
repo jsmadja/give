@@ -101,54 +101,8 @@ td img {
     padding: 20px;
 }
 
-#catalog td:first-child, #requests td:first-child, #myrequests td:first-child, #gifts td:first-child {
-    padding: 0;
-    width: 100px;
-}
-
-table p {
-    font-size: 0.8em;
-}
-
 footer {
     text-align: center;
-}
-
-.dashboard-block {
-    color: white;
-    margin: 10px;
-    height: 200px;
-    padding: 0;
-    background-color: #33485e;
-    width: 30%;
-}
-
-.dashboard-block:hover {
-    background-color: #8d92a6;
-}
-
-.dashboard-block img {
-    float: left;
-}
-
-.dashboard-block #icon-catalog {
-    width: inherit;
-}
-
-.dashboard-block #icon-add_gift {
-    width: 100px;
-}
-
-.dashboard-block #icon-myrequests {
-    width: 110px;
-}
-
-.dashboard-block #icon-requests {
-    width: inherit;
-}
-
-.dashboard-block #icon-contacts {
-    width: inherit;
 }
 
 #connection-space-accounts {
@@ -166,7 +120,6 @@ footer {
 #facebook-connect {
     height: 58px;
 }
-
 
 .flash-error, .flash-message {
     color: white;
@@ -218,4 +171,9 @@ footer {
 .gift form {
     background: white;
     display: block;
+}
+
+#give {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

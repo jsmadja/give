@@ -1,9 +1,11 @@
 package controllers;
 
 import com.feth.play.module.pa.PlayAuthenticate;
+import jdk.nashorn.internal.objects.Global;
 import models.Contact;
 import models.LinkType;
 import models.User;
+import models.mails.InvitationMail;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -62,6 +64,7 @@ public class Users extends Controller {
     private static void sendInvitationToExistingUser(String email, User invitee, User inviter) {
         Contact contact = new Contact(inviter, invitee, LinkType.INVITED);
         contact.save();
+        new InvitationMail(invitee.email, inviter.name, Application.website).send();
         flash(FLASH_MESSAGE_KEY, "Une invitation a été envoyée à " + email);
     }
 

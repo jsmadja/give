@@ -22,7 +22,6 @@ GET         /logout                                 com.feth.play.module.pa.cont
 GET         /authenticate/:provider                 com.feth.play.module.pa.controllers.Authenticate.authenticate(provider: String)
 GET         /authenticate/:provider/denied          controllers.Application.oAuthDenied(provider: String)
 GET         /about                                  controllers.Application.about
-GET         /mail                                   controllers.Application.mail
 GET         /                                       controllers.Application.index
 
 GET         /assets/*file                           controllers.Assets.at(path="/public", file)

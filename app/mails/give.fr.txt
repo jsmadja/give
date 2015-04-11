@@ -1,10 +1,8 @@
-Bonjour,
+Bonjour $requester,
 
-$giver est d'accord pour vous donner : $gift-name
+$giver est d'accord pour vous donner un objet, voici son message :
 
---
 $description
---
 
 Cordialement,
 

@@ -4,12 +4,18 @@ import com.feth.play.module.pa.exceptions.AccessDeniedException;
 import com.feth.play.module.pa.exceptions.AuthException;
 import play.Application;
 import play.GlobalSettings;
+import play.api.Play;
 import play.mvc.Call;
 import controllers.routes;
 
 public class Global extends GlobalSettings {
 
+    public static String website;
+
     public void onStart(final Application app) {
+
+        controllers.Application.website = app.configuration().getString(controllers.Application.WEBSITE_URL);
+
         PlayAuthenticate.setResolver(new Resolver() {
 
             @Override

@@ -1,6 +1,6 @@
 Bonjour $giver,
 
-$requester est intéressé par un de vos objets $gift-name
+$requester est intéressé(e) par un de vos objets, connectez-vous sur $website pour traiter vos demandes.
 
 Cordialement,
 

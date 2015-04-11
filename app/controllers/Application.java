@@ -1,6 +1,5 @@
 package controllers;
 
-import models.mails.InvitationMail;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.about;
@@ -12,11 +11,8 @@ public class Application extends Controller {
 
     public static final String FLASH_MESSAGE_KEY = "message";
     public static final String FLASH_ERROR_KEY = "error";
-
-    public static Result mail() {
-        new InvitationMail("julien.smadja@gmail.com").send();
-        return ok();
-    }
+    public static final String WEBSITE_URL = "website.url";
+    public static String website;
 
     public static Result index() {
         return ok(index.render(getLocalUser(session())));

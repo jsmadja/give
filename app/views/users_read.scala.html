@@ -3,7 +3,7 @@
 @main("Give!", user) {
 
     <h1>Les objets à donner par @user.name</h1>
-    @if(!user.gifts.isEmpty) {
+    @if(!user.getAvailableGifts.isEmpty) {
         @for(gift <- user.gifts) {
             <div class="gift thumbnail">
                 <p class="user-name">@gift.giver.name</p>

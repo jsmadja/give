@@ -11,7 +11,7 @@
             <div class="gift thumbnail">
                 <p class="user-name">@request.gift.giver.name</p>
                 <img src="data:image/jpeg;base64,@request.gift.photoBase64"/>
-                <a id="give" class="btn btn-sm btn-primary" href="/requests/@request.id">Je donne</a>
+                <a id="give" class="btn btn-sm btn-primary" href="@routes.Requests.request(request)">Je donne</a>
             </div>
         }
     }

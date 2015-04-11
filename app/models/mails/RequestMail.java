@@ -1,6 +1,7 @@
-package models;
+package models.mails;
 
-import models.mails.Mail;
+import models.Gift;
+import models.Request;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,10 +9,12 @@ import java.util.Map;
 public class RequestMail extends Mail {
 
     private final Request request;
+    private final String website;
 
-    public RequestMail(Request request) {
+    public RequestMail(Request request, String website) {
         super(request.gift.giver.email, request.requester.email);
         this.request = request;
+        this.website = website;
     }
 
     @Override
@@ -21,9 +24,7 @@ public class RequestMail extends Mail {
             Gift gift = request.gift;
             put("giver", gift.giver.name);
             put("requester", request.requester.name);
-            put("photoBase64", gift.photoBase64);
-            put("gift-name", gift.name);
-            put("request-id", request.id.toString());
+            put("website", RequestMail.this.website);
         }};
     }
 

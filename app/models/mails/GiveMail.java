@@ -1,6 +1,5 @@
 package models.mails;
 
-import models.Gift;
 import models.Request;
 
 import java.util.HashMap;
@@ -22,8 +21,7 @@ public class GiveMail extends Mail {
         return new HashMap<String, String>() {{
             Request request = GiveMail.this.request;
             put("giver", request.gift.giver.name);
-            Gift gift = request.gift;
-            put("gift-name", gift.name);
+            put("requester", request.requester.name);
             put("description", GiveMail.this.description);
         }};
     }
