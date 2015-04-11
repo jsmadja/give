@@ -26,8 +26,8 @@ public class Users extends Controller {
         return ok(users.render(currentUser()));
     }
 
-    public static Result read(User user) {
-        return ok(users_read.render(user));
+    public static Result read(User giver) {
+        return ok(users_read.render(currentUser(), giver));
     }
 
     public static User getLocalUser(final Http.Session session) {

@@ -1,10 +1,10 @@
-@(user: models.User)
+@(user: models.User, giver: models.User)
 
 @main("Give!", user) {
 
-    <h1>Ce que donne @user.name</h1>
+    <h1>Ce que donne @giver.name</h1>
     @if(!user.getAvailableGifts.isEmpty) {
-        @for(gift <- user.gifts) {
+        @for(gift <- giver.gifts) {
             <div class="gift thumbnail">
                 <img src="data:image/jpeg;base64,@gift.photoBase64"/>
                 @if(gift.name) {
