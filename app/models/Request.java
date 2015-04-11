@@ -22,13 +22,17 @@ public class Request extends Model implements PathBindable<Request> {
     @Id
     @GeneratedValue
     public Long id;
+
     @ManyToOne
     public User requester;
+
     @ManyToOne
     public Gift gift;
+
     @CreatedTimestamp
     @Column(name = "created_at")
     private Date createdAt;
+
     @UpdatedTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
@@ -49,10 +53,6 @@ public class Request extends Model implements PathBindable<Request> {
             }
         }
         return gifts;
-    }
-
-    public static List<Request> findRequestsOf(User user) {
-        return find.where(eq("requester", user)).findList();
     }
 
     @Override

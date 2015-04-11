@@ -8,13 +8,14 @@
         <p>Aucune demande pour le moment ...</p>
 
         <div class="alert alert-info" role="alert">
-            <strong>Astuce !</strong> Ajoutez de nouvelles relations en allant sur <a href="/users">la page de gestion de contacts ...</a>
+            <strong>Astuce !</strong> Ajoutez de nouvelles relations en allant sur <a href="/users">
+            la page de gestion de contacts ...</a>
         </div>
 
     } else {
 
         <table id="myrequests" class="table table-bordered">
-        @for(request <- user.requests.toSeq.sortBy(_.gift.name).groupBy(_.gift.category).flatMap(_._2)) {
+        @for(request <- user.requests) {
             <tr>
                 <td>
                 @if(request.gift.photoBase64) {
@@ -24,11 +25,7 @@
                 <td>
                     <span class="user-name">@request.gift.giver.name</span>
                     donne <span class="gift-name">@request.gift.name</span>
-                    <span class="gift-category-name">@request.gift.category.name</span>
-                    <p>
-                    @request.gift.description
-                    </p>
-                    <form id="removeRequest" action = "/requests/remove" method="POST">
+                    <form id="removeRequest" action = "@routes.MyRequests.removeRequest" method="POST">
                         <input type="hidden" value="@request.id" name="requestId" />
                         <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
                     </form>

@@ -21,7 +21,6 @@ public class RequestMail extends Mail {
             put("requester", request.requester.name);
             put("photoBase64", gift.photoBase64);
             put("gift-name", gift.name);
-            put("gift-description", gift.description);
             put("request-id", request.id.toString());
         }};
     }

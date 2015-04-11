@@ -94,15 +94,10 @@ td img {
     color: #33485e;
 }
 
-.gift-category-name {
-    font-size: 0.9em;
-    float: right;
-}
-
-form {
+.form-group {
     background-color: #F2F2F2;
     border-radius: 2px;
-    padding: 5px;
+    padding: 20px;
 }
 
 #catalog td:first-child, #requests td:first-child, #myrequests td:first-child, #gifts td:first-child {
@@ -110,7 +105,7 @@ form {
     width: 100px;
 }
 
-#removeGift, #give, #addRequest, #removeRequest {
+#give, #addRequest, #removeRequest {
     float: right;
 }
 
@@ -193,4 +188,37 @@ footer {
 
 .badge-red, .label-red {
     background-color: #e74c3c;
+}
+
+#snapshot-img, video {
+    display: none;
+    vertical-align: top;
+    width: 320px;
+    height: 240px;
+}
+
+.gift {
+    display: inline-block;
+    width: 200px;
+    text-align: center;
+    vertical-align: top;
+    margin-right: 20px;
+}
+
+.gift button {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.gift p {
+    margin-top: 5px;
+}
+
+.gift img {
+    width: 200px;
+}
+
+.gift form {
+    background: white;
+    display: block;
 }

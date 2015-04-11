@@ -36,15 +36,20 @@ public class User extends Model implements PathBindable<User> {
     public String name;
     public boolean active;
     public boolean emailValidated;
+
     @OneToMany(cascade = CascadeType.ALL)
     public List<LinkedAccount> linkedAccounts;
+
     @OneToMany(mappedBy = "giver")
     public List<Gift> gifts;
+
     @OneToMany(mappedBy = "requester")
     public List<Request> requests;
+
     @CreatedTimestamp
     @Column(name = "created_at")
     private Date createdAt;
+
     @UpdatedTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;

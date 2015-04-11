@@ -29,11 +29,7 @@ public class Gift extends Model {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @Constraints.Required
     public String name;
-
-    @Lob
-    public String description;
 
     @Lob
     @Column
@@ -44,10 +40,6 @@ public class Gift extends Model {
 
     @OneToMany(mappedBy = "gift", cascade = CascadeType.ALL)
     public List<Request> requests;
-
-    @Constraints.Required
-    @ManyToOne
-    public Category category;
 
     public boolean given;
 

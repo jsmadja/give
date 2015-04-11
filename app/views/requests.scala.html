@@ -7,38 +7,24 @@
     @if(models.User.getPendingRequests.isEmpty) {
         <p>Vous n'avez pas de demandes en attente</p>
     } else {
-        <ul>
-        @for(requestsByCategories <- models.User.getPendingRequests.toSeq.groupBy(_.gift.category)) {
-            <li><a href="#@requestsByCategories._1.id">@requestsByCategories._1.name (@requestsByCategories._2.size)</a></li>
+        <table id="requests" class="table table-bordered">
+        @for(request <- models.User.getPendingRequests) {
+            <tr>
+                <td>
+                @if(request.gift.photoBase64) {
+                    <img src="data:image/jpeg;base64,@request.gift.photoBase64"/>
+                } else {
+                    <img src="@routes.Assets.at("images/no_photo.svg")" class="icon-no_photo" />
+                }
+                </td>
+                <td>
+                    <span class="user-name">@request.requester.name</span>
+                    voudrait <span class="gift-name">@request.gift.name</span>
+                    <a id="give" class="btn btn-sm btn-primary" href="/requests/@request.id">Je donne</a>
+                </td>
+            </tr>
         }
-        </ul>
-
-        @for(requestsByCategories <- models.User.getPendingRequests.toSeq.groupBy(_.gift.category)) {
-            <h3>@requestsByCategories._1.name</h3>
-            <a name="@requestsByCategories._1.id"></a>
-
-            <table id="requests" class="table table-bordered">
-            @for(request <- requestsByCategories._2.sortBy(_.gift.name)) {
-                <tr>
-                    <td>
-                    @if(request.gift.photoBase64) {
-                        <img src="data:image/jpeg;base64,@request.gift.photoBase64"/>
-                    } else {
-                        <img src="@routes.Assets.at("images/no_photo.svg")" class="icon-no_photo" />
-                    }
-                    </td>
-                    <td>
-                        <span class="user-name">@request.requester.name</span> voudrait <span class="gift-name">@request.gift.name</span>
-                        <p>
-                        @request.gift.description
-                        </p>
-                        <a id="give" class="btn btn-sm btn-primary" href="/requests/@request.id">Je donne</a>
-                    </td>
-                </tr>
-            }
-            </table>
-        }
-
+        </table>
     }
 
 }

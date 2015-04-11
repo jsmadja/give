@@ -1,7 +1,6 @@
 package controllers;
 
 import com.ning.http.util.Base64;
-import models.Category;
 import models.Gift;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -20,7 +19,7 @@ import static controllers.Users.currentUser;
 public class Gifts extends Controller {
 
     public static Result index() {
-        return ok(gifts.render(currentUser(), Category.find.all()));
+        return ok(gifts.render(currentUser()));
     }
 
     public static Result addGift() throws IOException {
@@ -33,17 +32,20 @@ public class Gifts extends Controller {
         Gift gift = new Gift();
         gift.giver = currentUser();
         gift.name = data.get("name")[0];
-        gift.description = data.get("description")[0];
-        gift.category = Category.find.byId(Long.parseLong(data.get("category")[0]));
-
-        if (picture != null) {
-            File file = picture.getFile();
-            gift.photoBase64 = Base64.encode(Files.readAllBytes(file.toPath()));
+        if (!data.get("photowebcam")[0].isEmpty()) {
+            gift.photoBase64 = data.get("photowebcam")[0].split("base64,")[1];
+        } else {
+            if (picture != null) {
+                File file = picture.getFile();
+                gift.photoBase64 = Base64.encode(Files.readAllBytes(file.toPath()));
+            }
         }
-        gift.save();
-
-        flash(Application.FLASH_MESSAGE_KEY, "Vous avez ajouté " + gift.name);
-
+        if (gift.photoBase64 == null) {
+            flash(Application.FLASH_ERROR_KEY, "Vous devez obligatoirement ajouter une photo de l'objet à donner");
+        } else {
+            gift.save();
+            flash(Application.FLASH_MESSAGE_KEY, "Vous avez ajouté un nouvel objet à votre catalogue");
+        }
         return redirect(routes.Gifts.index());
     }
 
@@ -52,9 +54,7 @@ public class Gifts extends Controller {
         Long id = Long.parseLong(data.get("giftId")[0]);
         Gift gift = Gift.find.byId(id);
         gift.delete();
-
-        flash(Application.FLASH_MESSAGE_KEY, "Vous avez supprimé " + gift.name);
-
+        flash(Application.FLASH_MESSAGE_KEY, "Vous avez supprimé un objet de votre catalogue");
         return redirect(routes.Gifts.index());
     }
 
