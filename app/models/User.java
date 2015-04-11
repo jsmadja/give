@@ -1,6 +1,5 @@
 package models;
 
-import com.avaje.ebean.Expr;
 import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
@@ -13,12 +12,15 @@ import play.db.ebean.Model;
 import play.mvc.PathBindable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import static com.avaje.ebean.Expr.*;
 import static controllers.Users.currentUser;
 import static models.Gift.findAllGiftsFor;
+import static models.LinkType.LINKED;
 
 @Entity
 @Table(name = "users")
@@ -55,9 +57,21 @@ public class User extends Model implements PathBindable<User> {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @OneToMany(mappedBy = "invitee")
+    private List<Contact> contactsAsInvitee;
+
+    @OneToMany(mappedBy = "inviter")
+    private List<Contact> contactsAsInviter;
+
+    public User() {
+    }
+
+    public User(String email) {
+        this.email = email;
+    }
+
     public static boolean existsByAuthUserIdentity(final AuthUserIdentity identity) {
-        final ExpressionList<User> exp = getAuthUserFind(identity);
-        return exp.findRowCount() > 0;
+        return getAuthUserFind(identity).findRowCount() > 0;
     }
 
     private static ExpressionList<User> getAuthUserFind(final AuthUserIdentity identity) {
@@ -74,11 +88,18 @@ public class User extends Model implements PathBindable<User> {
     }
 
     public static User create(final AuthUser authUser) {
-        final User user = new User();
+        User user = null;
+        if (authUser instanceof EmailIdentity) {
+            String email = ((EmailIdentity) authUser).getEmail();
+            user = find.where().eq("email", email).findUnique();
+        }
+        if (user == null) {
+            user = new User();
+        }
         user.active = true;
         user.linkedAccounts = Collections.singletonList(LinkedAccount.create(authUser));
 
-        if (authUser instanceof EmailIdentity) {
+        if (authUser instanceof EmailIdentity && user.id == null) {
             final EmailIdentity identity = (EmailIdentity) authUser;
             // Remember, even when getting them from FB & Co., emails should be
             // verified within the application as a security breach there might
@@ -90,7 +111,7 @@ public class User extends Model implements PathBindable<User> {
         if (authUser instanceof NameIdentity) {
             final NameIdentity identity = (NameIdentity) authUser;
             final String name = identity.getName();
-            if (name != null) {
+            if (name != null && user.name == null) {
                 user.name = name;
             }
         }
@@ -111,8 +132,22 @@ public class User extends Model implements PathBindable<User> {
         return Request.findFriendRequestsOf(currentUser());
     }
 
-    public static List<User> getContacts() {
-        return find.where(Expr.ne("id", currentUser().id)).findList();
+    public static User findByEmail(String email) {
+        return find.where(eq("email", email)).findUnique();
+    }
+
+    public List<User> getLinkedUsers() {
+        List<User> linkedUsers = new ArrayList<>();
+        User currentUser = currentUser();
+        List<Contact> contacts = Contact.find.where(and(eq("type", LINKED), or(eq("invitee", currentUser), eq("inviter", currentUser)))).findList();
+        for (Contact contact : contacts) {
+            if (contact.invitee.equals(currentUser)) {
+                linkedUsers.add(contact.inviter);
+            } else {
+                linkedUsers.add(contact.invitee);
+            }
+        }
+        return linkedUsers;
     }
 
     @Override
@@ -128,6 +163,44 @@ public class User extends Model implements PathBindable<User> {
     @Override
     public String javascriptUnbind() {
         return null;
+    }
+
+    public boolean hasInvited(User invitee) {
+        for (Contact contact : contactsAsInviter) {
+            if (contact.invitee.equals(invitee)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Contact getContactOf(User inviter) {
+        for (Contact contact : contactsAsInvitee) {
+            if (contact.inviter.equals(inviter)) {
+                return contact;
+            }
+        }
+        return null;
+    }
+
+    public List<Contact> getPendingContacts() {
+        List<Contact> pendingContacts = new ArrayList<>();
+        for (Contact contact : contactsAsInviter) {
+            if (contact.type == LinkType.INVITED) {
+                pendingContacts.add(contact);
+            }
+        }
+        return pendingContacts;
+    }
+
+    public List<Contact> getPendingInvitations() {
+        List<Contact> pendingInvitations = new ArrayList<>();
+        for (Contact contact : contactsAsInvitee) {
+            if (contact.type == LinkType.INVITED) {
+                pendingInvitations.add(contact);
+            }
+        }
+        return pendingInvitations;
     }
 
 }

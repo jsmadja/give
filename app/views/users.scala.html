@@ -1,20 +1,66 @@
-@(user: models.User, contacts: List[models.User])
+@(user: models.User)
 
 @main("Give! - Contacts", user) {
 
-    <h1>Mes contacts</h1>
+    <h1>Inviter un ami</h1>
+    <form id="inviteFriend" action = "@routes.Users.invite" method="POST">
+        <div class="form-group">
+            <label for="email">Email de votre ami(e)</label>
+            <input type="email" name="email" required>
+        </div>
+        <p>
+            <button type="submit" class="btn btn-success">Envoyer l'invitation</button>
+        </p>
+    </form>
 
-    <table id="contacts" class="table table-bordered">
-    @for(contact <- contacts.sortBy(_.name)) {
-        <tr>
-            <td>
-                <a href="/users/@contact.id">@contact.name</a>
-            </td>
-            <td>
-                @contact.gifts.size objets à donner
-            </td>
-        </tr>
+    @if(!user.getLinkedUsers.isEmpty) {
+        <h1>Mes contacts</h1>
+        <table id="contacts" class="table table-bordered">
+        @for(contact <- user.getLinkedUsers.sortBy(_.name)) {
+            <tr>
+                <td>
+                    <a href="/users/@contact.id">@contact.name</a>
+                </td>
+                <td>
+                    @contact.gifts.size objets à donner
+                </td>
+            </tr>
+        }
+        </table>
     }
-    </table>
+
+    @if(!user.getPendingContacts.isEmpty) {
+        <h1>Invitations en attente</h1>
+        <table id="contacts" class="table table-bordered">
+        @for(contact <- user.getPendingContacts.sortBy(_.invitee.email)) {
+            <tr>
+                <td>
+                    <a href="/users/@contact.id">@contact.invitee.email</a>
+                </td>
+                <td>
+                @contact.updatedAt
+                </td>
+            </tr>
+        }
+        </table>
+    }
+
+    @if(!user.getPendingInvitations.isEmpty) {
+        <h1>Les connaissez-vous ?</h1>
+        <table id="contacts" class="table table-bordered">
+        @for(contact <- user.getPendingInvitations.sortBy(_.inviter.name)) {
+            <tr>
+                <td>
+                @contact.inviter.name
+                </td>
+                <td>
+                @contact.inviter.email
+                </td>
+                <td><a href="@routes.Users.acceptInvitation(contact)">OUI</a></td>
+                <td><a href="@routes.Users.declineInvitation(contact)">NON</a></td>
+            </tr>
+        }
+        </table>
+    }
 
 }

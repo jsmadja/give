@@ -1,24 +1,29 @@
 # Routes
 
-POST        /requests/remove                      controllers.MyRequests.removeRequest
-POST        /requests                             controllers.MyRequests.addRequest
-POST        /gifts/remove                         controllers.Gifts.removeGift
-POST        /gifts                                controllers.Gifts.addGift
-POST        /give                                 controllers.Requests.give
+POST        /requests/remove                        controllers.MyRequests.removeRequest
+POST        /requests                               controllers.MyRequests.addRequest
+POST        /gifts/remove                           controllers.Gifts.removeGift
+POST        /gifts                                  controllers.Gifts.addGift
+POST        /give                                   controllers.Requests.give
 
-GET         /myrequests                           controllers.MyRequests.index
-GET         /requests                             controllers.Requests.index
-GET         /requests/:request                    controllers.Requests.request(request: models.Request)
-GET         /catalog                              controllers.Catalog.index
-GET         /gifts                                controllers.Gifts.index
-GET         /users                                controllers.Users.index
-GET         /users/:user                          controllers.Users.read(user: models.User)
+GET         /myrequests                             controllers.MyRequests.index
+GET         /requests                               controllers.Requests.index
+GET         /requests/:request                      controllers.Requests.request(request: models.Request)
+GET         /catalog                                controllers.Catalog.index
+GET         /gifts                                  controllers.Gifts.index
+GET         /users                                  controllers.Users.index
+GET         /users/:user                            controllers.Users.read(user: models.User)
 
-GET         /logout                               com.feth.play.module.pa.controllers.Authenticate.logout
-GET         /authenticate/:provider               com.feth.play.module.pa.controllers.Authenticate.authenticate(provider: String)
-GET         /authenticate/:provider/denied        controllers.Application.oAuthDenied(provider: String)
-GET         /about                                controllers.Application.about
-GET         /mail                                 controllers.Application.mail
-GET         /                                     controllers.Application.index
+POST        /users/invite                           controllers.Users.invite
 
-GET         /assets/*file                         controllers.Assets.at(path="/public", file)
+GET         /users/acceptInvitation/:contact        controllers.Users.acceptInvitation(contact: models.Contact)
+GET         /users/declineInvitation/:contact        controllers.Users.declineInvitation(contact: models.Contact)
+
+GET         /logout                                 com.feth.play.module.pa.controllers.Authenticate.logout
+GET         /authenticate/:provider                 com.feth.play.module.pa.controllers.Authenticate.authenticate(provider: String)
+GET         /authenticate/:provider/denied          controllers.Application.oAuthDenied(provider: String)
+GET         /about                                  controllers.Application.about
+GET         /mail                                   controllers.Application.mail
+GET         /                                       controllers.Application.index
+
+GET         /assets/*file                           controllers.Assets.at(path="/public", file)

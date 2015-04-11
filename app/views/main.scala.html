@@ -47,7 +47,7 @@
                                 </a></li>
                             }
 
-                            <li><img id="icon-contacts" src="@routes.Assets.at("images/contacts.svg")"/><a href="@routes.Users.index">Mes contacts <span class="badge">@if(models.User.getContacts.size > 0){ @models.User.getContacts.size</span>}</a></li>
+                            <li><img id="icon-contacts" src="@routes.Assets.at("images/contacts.svg")"/><a href="@routes.Users.index">Mes contacts <span class="badge">@if(user.getLinkedUsers.size > 0){ @user.getLinkedUsers.size</span>}</a></li>
                         </ul>
                     </div>
                     <div class="col-md-10">
