@@ -20,6 +20,11 @@ if (video) {
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia ||
     navigator.msGetUserMedia;
+
+    if(navigator.getUserMedia) {
+        document.querySelector('#integrated-webcam').style.display='block';
+    }
+
     navigator.getUserMedia({video: true},
         function (stream) {
             document.querySelector('#snapshot-img').style.display = 'inline-block';

@@ -9,26 +9,28 @@
             <input type="file" name="photo" accept="image/*;capture=camera">
         </div>
 
-        <p>
-            Ou
-        </p>
+        <div id="integrated-webcam" style="display:none;">
+            <p>
+                Ou
+            </p>
 
-        <div class="form-group">
-            <label for="photo">Prendre une photo via votre webcam</label>
-            <div class="alert alert-warning">
+            <div class="form-group">
+                <label for="photo">Prendre une photo via votre webcam</label>
+                <div class="alert alert-warning">
+                    <p>
+                        Si vous souhaitez prendre une photo depuis votre webcam, cliquez sur le bouton "Autoriser" en haut de la fenêtre.
+                    </p>
+                    <p>
+                        Puis cliquez sur la vidéo pour prendre la photo.
+                    </p>
+                </div>
                 <p>
-                    Si vous souhaitez prendre une photo depuis votre webcam, cliquez sur le bouton "Autoriser" en haut de la fenêtre.
-                </p>
-                <p>
-                    Puis cliquez sur la vidéo pour prendre la photo.
+                    <canvas style="display : none ;" width="320" height="240"></canvas>
+                    <video autoplay></video>
+                    <img class="thumbnail" id="snapshot-img" name="photo-webcam" src="@routes.Assets.at("images/no_photo.svg")">
+                    <input type="hidden" id="photowebcam" name="photowebcam" />
                 </p>
             </div>
-            <p>
-                <canvas style="display : none ;" width="320" height="240"></canvas>
-                <video autoplay></video>
-                <img class="thumbnail" id="snapshot-img" name="photo-webcam" src="@routes.Assets.at("images/no_photo.svg")">
-                <input type="hidden" id="photowebcam" name="photowebcam" />
-            </p>
         </div>
         <div class="form-group">
             <label for="name">Description (facultatif)</label>
