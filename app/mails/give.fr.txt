@@ -1,6 +1,6 @@
 Bonjour $requester,
 
-$giver est d'accord pour vous donner un objet, voici son message :
+$giver (en copie de ce courriel) est d'accord pour vous donner un objet, voici son message :
 
 $description
 

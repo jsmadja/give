@@ -19,7 +19,7 @@
                 <p class="user-name">@request.gift.giver.name</p>
                 <img src="data:image/jpeg;base64,@request.gift.photoBase64"/>
                 @if(request.gift.name) {
-                    <p title="@request.gift.name">Voir la description</p>
+                    <p class="description" data-toggle="popover" data-content="@request.gift.name">Voir la description</p>
                 }
                 <form id="removeRequest" action = "@routes.MyRequests.removeRequest" method="POST">
                     <input type="hidden" value="@request.id" name="requestId" />

@@ -28,7 +28,7 @@ public class GiveMail extends Mail {
 
     @Override
     protected String subject() {
-        return request.gift.giver.name + " vous donne un objet";
+        return "Finalisation d'un don d'objet";
     }
 
     @Override

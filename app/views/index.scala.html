@@ -22,7 +22,7 @@
                         <p class="user-name">@gift.giver.name</p>
                         <img src="data:image/jpeg;base64,@gift.photoBase64"/>
                         @if(gift.name) {
-                            <p title="@gift.name">Voir la description</p>
+                            <p class="description" data-toggle="popover" data-content="@gift.name">Voir la description</p>
                         }
                         <form id="addRequest" method="POST" action="requests">
                             <input type="hidden" value="@gift.id" name="giftId" />

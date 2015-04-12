@@ -203,4 +203,12 @@ public class User extends Model implements PathBindable<User> {
         return Contact.find.where().eq("invitee", this).eq("type", INVITED).findList();
     }
 
+    public boolean isFriendWith(User other) {
+        Contact contact = getContactWith(other);
+        return contact != null && contact.type == LINKED;
+    }
+
+    public boolean owns(Request request) {
+        return request.gift.giver.equals(this);
+    }
 }

@@ -39,7 +39,10 @@ public class Requests extends Controller {
     }
 
     public static Result request(Request request) {
-        return ok(gift_give.render(currentUser(), request));
+        if(currentUser().owns(request)) {
+            return ok(gift_give.render(currentUser(), request));
+        }
+        return unauthorized();
     }
 
 }

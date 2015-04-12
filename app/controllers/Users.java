@@ -1,7 +1,6 @@
 package controllers;
 
 import com.feth.play.module.pa.PlayAuthenticate;
-import jdk.nashorn.internal.objects.Global;
 import models.Contact;
 import models.LinkType;
 import models.User;
@@ -27,7 +26,10 @@ public class Users extends Controller {
     }
 
     public static Result read(User giver) {
-        return ok(users_read.render(currentUser(), giver));
+        if (currentUser().isFriendWith(giver)) {
+            return ok(users_read.render(currentUser(), giver));
+        }
+        return unauthorized();
     }
 
     public static User getLocalUser(final Http.Session session) {
@@ -82,17 +84,23 @@ public class Users extends Controller {
     }
 
     public static Result acceptInvitation(Contact contact) {
-        contact.type = LINKED;
-        contact.save();
-        flash(FLASH_MESSAGE_KEY, "Vous avez désormais accès au catalogue de " + contact.inviter.name);
-        return index();
+        if (currentUser().isFriendWith(contact.inviter)) {
+            contact.type = LINKED;
+            contact.save();
+            flash(FLASH_MESSAGE_KEY, "Vous avez désormais accès au catalogue de " + contact.inviter.name);
+            return index();
+        }
+        return unauthorized();
     }
 
     public static Result declineInvitation(Contact contact) {
-        contact.type = REFUSED;
-        contact.save();
-        flash(FLASH_MESSAGE_KEY, "Vous avez refusé d'être connecté(e) à " + contact.inviter.name);
-        return index();
+        if (currentUser().isFriendWith(contact.inviter)) {
+            contact.type = REFUSED;
+            contact.save();
+            flash(FLASH_MESSAGE_KEY, "Vous avez refusé d'être connecté(e) à " + contact.inviter.name);
+            return index();
+        }
+        return unauthorized();
     }
 
 }

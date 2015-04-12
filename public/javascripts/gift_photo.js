@@ -42,3 +42,5 @@ if (video) {
             console.log(ev);
         });
 }
+
+$('.description').popover({trigger:'hover'});
