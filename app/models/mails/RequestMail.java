@@ -12,7 +12,7 @@ public class RequestMail extends Mail {
     private final String website;
 
     public RequestMail(Request request, String website) {
-        super(request.gift.giver.email);
+        super(request.gift.giver.email, request.requester.email);
         this.request = request;
         this.website = website;
     }

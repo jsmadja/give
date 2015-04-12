@@ -11,7 +11,7 @@ public class GiveMail extends Mail {
     private final String description;
 
     public GiveMail(Request request, String description) {
-        super(request.requester.email);
+        super(request.requester.email, request.gift.giver.email);
         this.request = request;
         this.description = description;
     }
