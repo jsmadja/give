@@ -33,7 +33,7 @@
         @for(contact <- user.getPendingContacts.sortBy(_.invitee.email)) {
             <tr>
                 <td>
-                    <a href="/users/@contact.id">@contact.invitee.email</a>
+                    @contact.invitee.email
                 </td>
                 <td>
                 @contact.updatedAt

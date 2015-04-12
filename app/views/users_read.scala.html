@@ -3,8 +3,8 @@
 @main("Give!", user) {
 
     <h1>Ce que donne @giver.name</h1>
-    @if(!user.getAvailableGifts.isEmpty) {
-        @for(gift <- giver.gifts) {
+    @if(!giver.getAvailableGifts.isEmpty) {
+        @for(gift <- giver.getAvailableGifts) {
             <div class="gift thumbnail">
                 <img src="data:image/jpeg;base64,@gift.photoBase64"/>
                 @if(gift.name) {
