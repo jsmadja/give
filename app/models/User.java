@@ -203,6 +203,11 @@ public class User extends Model implements PathBindable<User> {
         return Contact.find.where().eq("invitee", this).eq("type", INVITED).findList();
     }
 
+    public boolean isInvitedBy(User other) {
+        Contact contact = getContactWith(other);
+        return contact != null && contact.type == INVITED;
+    }
+
     public boolean isFriendWith(User other) {
         Contact contact = getContactWith(other);
         return contact != null && contact.type == LINKED;

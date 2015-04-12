@@ -84,7 +84,7 @@ public class Users extends Controller {
     }
 
     public static Result acceptInvitation(Contact contact) {
-        if (currentUser().isFriendWith(contact.inviter)) {
+        if (currentUser().isInvitedBy(contact.inviter)) {
             contact.type = LINKED;
             contact.save();
             flash(FLASH_MESSAGE_KEY, "Vous avez désormais accès au catalogue de " + contact.inviter.name);
@@ -94,7 +94,7 @@ public class Users extends Controller {
     }
 
     public static Result declineInvitation(Contact contact) {
-        if (currentUser().isFriendWith(contact.inviter)) {
+        if (currentUser().isInvitedBy(contact.inviter)) {
             contact.type = REFUSED;
             contact.save();
             flash(FLASH_MESSAGE_KEY, "Vous avez refusé d'être connecté(e) à " + contact.inviter.name);
